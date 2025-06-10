@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* Root variables */
+:root {
+  /* Custom colors that work with Mantine */
+  --mantine-color-brand-0: #f0f4ff;
+  --mantine-color-brand-1: #e1ecff;
+  --mantine-color-brand-2: #c7d8ff;
+  --mantine-color-brand-3: #a5c0ff;
+  --mantine-color-brand-4: #7ea3ff;
+  --mantine-color-brand-5: #5985ff;
+  --mantine-color-brand-6: #4c7fff;
+  --mantine-color-brand-7: #3b6bff;
+  --mantine-color-brand-8: #2e5bff;
+  --mantine-color-brand-9: #1e46e0;
+}
+
+/* Global reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+/* Icon size fixes - prevent oversized icons */
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Tabler icons size fix */
+.tabler-icon {
+  width: 1em;
+  height: 1em;
+}
+
+/* Override any conflicting styles */
+[class*="tabler-icon"] {
+  width: 1em !important;
+  height: 1em !important;
+}
+
+/* Ensure Mantine components don't get overridden */
+.mantine-AppShell-root {
+  height: 100vh;
+}
+
+.mantine-NavLink-root {
+  border-radius: 0.5rem;
+}
+
+/* Custom utility classes */
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ensure proper styling for common elements */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* Data table enhancements */
+.data-table-container {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+/* Form enhancements */
+.form-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+/* Status badge styles */
+.status-active {
+  color: #28a745;
+}
+.status-inactive {
+  color: #ffc107;
+}
+.status-draft {
+  color: #6c757d;
+}
+.status-completed {
+  color: #28a745;
+}
+.status-cancelled {
+  color: #dc3545;
+}
+
+/* Button hover effects */
+.btn-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .container-custom {
+    padding: 0 0.5rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
