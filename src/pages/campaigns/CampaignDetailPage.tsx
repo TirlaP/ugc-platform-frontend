@@ -51,6 +51,7 @@ import {
   IconMessage,
   IconPaperclip,
   IconUser,
+  IconUserMinus,
   IconUserPlus,
   IconVideo,
   IconX,
@@ -66,6 +67,7 @@ import { driveService } from '@/services/drive.service';
 import { emailService } from '@/services/email.service';
 import { mediaService } from '@/services/media.service';
 import { messageService } from '@/services/message.service';
+import { modals } from '@mantine/modals';
 
 const statusColors = {
   DRAFT: 'gray',
