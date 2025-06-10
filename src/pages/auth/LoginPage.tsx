@@ -8,16 +8,22 @@ import { getErrorMessage } from '@/lib/api-client';
 import { authService } from '@/services/auth.service';
 import type { LoginCredentials } from '@/types/auth.types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
+import { ArrowRight, Eye, EyeOff, Info, Loader2, Lock, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
+// Demo credentials
+const DEMO_CREDENTIALS = {
+  email: 'admin@ugc-agency.com',
+  password: 'demo123456',
+};
+
 // Validation schema
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 export function LoginPage() {
@@ -33,10 +39,17 @@ export function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginCredentials>({
     resolver: zodResolver(loginSchema),
+    defaultValues: DEMO_CREDENTIALS,
   });
+
+  const handleUseDemoCredentials = () => {
+    setValue('email', DEMO_CREDENTIALS.email);
+    setValue('password', DEMO_CREDENTIALS.password);
+  };
 
   const onSubmit = async (data: LoginCredentials) => {
     setIsLoading(true);
@@ -107,6 +120,30 @@ export function LoginPage() {
                 create a new account
               </Link>
             </p>
+          </div>
+
+          {/* Demo credentials info box */}
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+            <div className="flex items-start">
+              <Info className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
+              <div>
+                <h3 className="text-sm font-medium text-blue-900 mb-1">Demo Account</h3>
+                <p className="text-sm text-blue-700 mb-2">
+                  Use these credentials to explore the UGC platform with sample data:
+                </p>
+                <div className="text-sm text-blue-800 font-mono bg-blue-100 p-2 rounded">
+                  <div><strong>Email:</strong> {DEMO_CREDENTIALS.email}</div>
+                  <div><strong>Password:</strong> {DEMO_CREDENTIALS.password}</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleUseDemoCredentials}
+                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Click to fill form automatically →
+                </button>
+              </div>
+            </div>
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
