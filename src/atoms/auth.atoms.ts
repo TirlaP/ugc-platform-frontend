@@ -22,16 +22,16 @@ export const authStateAtom = atom((get) => ({
 }));
 
 // Action atoms
-export const setUserAtom = atom(null, (get, set, user: User | null) => {
+export const setUserAtom = atom(null, (_get, set, user: User | null) => {
   set(userAtom, user);
   set(isAuthenticatedAtom, !!user);
 });
 
-export const setSessionAtom = atom(null, (get, set, session: any) => {
+export const setSessionAtom = atom(null, (_get, set, session: any) => {
   set(sessionAtom, session);
 });
 
-export const setLoadingAtom = atom(null, (get, set, loading: boolean) => {
+export const setLoadingAtom = atom(null, (_get, set, loading: boolean) => {
   set(isLoadingAtom, loading);
 });
 
@@ -42,7 +42,7 @@ export const updateUserAtom = atom(null, (get, set, userData: Partial<User>) => 
   }
 });
 
-export const clearAuthAtom = atom(null, (get, set) => {
+export const clearAuthAtom = atom(null, (_get, set) => {
   set(userAtom, null);
   set(sessionAtom, null);
   set(isAuthenticatedAtom, false);

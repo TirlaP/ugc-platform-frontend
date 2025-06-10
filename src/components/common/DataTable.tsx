@@ -4,7 +4,6 @@
 
 import {
   ActionIcon,
-  Badge,
   Box,
   Button,
   Group,
@@ -14,16 +13,12 @@ import {
   Table,
   Text,
   TextInput,
-  Tooltip,
-  rem,
 } from '@mantine/core';
 import {
   IconDotsVertical,
-  IconEdit,
   IconEye,
   IconPlus,
   IconSearch,
-  IconTrash,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 
@@ -77,11 +72,12 @@ export function DataTable<T extends Record<string, any>>({
     if (!search) return true;
 
     return columns.some((col) => {
-      const value = col.key.includes('.')
-        ? col.key.split('.').reduce((obj, key) => obj?.[key], item)
+      const key = col.key as string;
+      const value = key.includes('.')
+        ? key.split('.').reduce((obj: any, k: string) => obj?.[k], item)
         : item[col.key];
 
-      return String(value).toLowerCase().includes(search.toLowerCase());
+      return String(value || '').toLowerCase().includes(search.toLowerCase());
     });
   });
 
@@ -112,8 +108,9 @@ export function DataTable<T extends Record<string, any>>({
       return column.render(item);
     }
 
-    if (column.key.includes('.')) {
-      return column.key.split('.').reduce((obj, key) => obj?.[key], item);
+    const key = column.key as string;
+    if (key.includes('.')) {
+      return key.split('.').reduce((obj: any, k: string) => obj?.[k], item);
     }
 
     return item[column.key];
@@ -209,7 +206,7 @@ export function DataTable<T extends Record<string, any>>({
                               <Menu.Item
                                 key={index}
                                 leftSection={<Icon size={16} />}
-                                color={action.color}
+                                {...(action.color && { color: action.color })}
                                 onClick={() => action.onClick(item)}
                               >
                                 {action.label}
