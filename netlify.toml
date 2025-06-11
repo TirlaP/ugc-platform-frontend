@@ -1,30 +1,30 @@
 [build]
-  publish = "dist"
-  command = "curl -fsSL https://bun.sh/install | bash && export PATH=\"$HOME/.bun/bin:$PATH\" && bun install && bun run build"
+publish = "dist"
+command = "curl -fsSL https://bun.sh/install | bash && export PATH=\"$HOME/.bun/bin:$PATH\" && bun install && bun run build"
 
 [build.environment]
-  NODE_VERSION = "18"
-  VITE_API_URL = "https://ugc-platform-backend.onrender.com/api"
-  VITE_BETTER_AUTH_URL = "https://ugc-platform-backend.onrender.com"
+NODE_VERSION = "18"
+VITE_API_URL = "https://api.platform-test.website/api"
+VITE_BETTER_AUTH_URL = "https://api.platform-test.website"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+from = "/*"
+to = "/index.html"
+status = 200
 
 [dev]
-  command = "npm run dev"
-  port = 5173
+command = "npm run dev"
+port = 5173
 
 [[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
