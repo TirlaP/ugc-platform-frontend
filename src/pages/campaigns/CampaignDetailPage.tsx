@@ -143,7 +143,7 @@ export function CampaignDetailPage() {
   // Assign creator mutation
   const assignCreatorMutation = useMutation({
     mutationFn: (data: { campaignId: string; creatorId: string; notes?: string }) =>
-      campaignService.assignCreator(data.campaignId, data.creatorId, data.notes),
+      campaignService.assignCreator(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['campaign', id] });
       notifications.show({
@@ -1181,7 +1181,7 @@ export function CampaignDetailPage() {
                 )
                 .map((creator: any) => ({
                   value: creator.id,
-                  label: `${creator.name} - $${creator.rates || 0}/project`,
+                  label: creator.name,
                 })) || []
             }
             value={selectedCreatorId}
