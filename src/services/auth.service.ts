@@ -1,9 +1,8 @@
 /**
  * Authentication service layer
- * Handles all auth-related API calls
+ * Handles all auth-related API calls using Better Auth
  */
 
-import { apiClient } from '@/lib/api-client';
 import {
   authClient,
   signIn as authSignIn,
@@ -22,23 +21,18 @@ class AuthService {
       password: credentials.password,
     });
 
+    if (response.error) {
+      throw new Error(response.error.message || 'Sign in failed');
+    }
+
     if (!response.data) {
-      throw new Error('Sign in failed');
+      throw new Error('Sign in failed - no data returned');
     }
 
-    // Store token in localStorage as fallback for cross-domain issues
-    if (response.data.token) {
-      localStorage.setItem('ugc-auth-token', response.data.token);
-    }
-
-    // Create a complete auth response
-    const authResponse = {
+    return {
       user: response.data.user as User,
-      session: response.data.session || { token: response.data.token },
+      session: response.data.session,
     };
-
-    console.log('Auth service signIn returning:', authResponse);
-    return authResponse;
   }
 
   /**
@@ -51,8 +45,12 @@ class AuthService {
       name: data.name,
     });
 
+    if (response.error) {
+      throw new Error(response.error.message || 'Sign up failed');
+    }
+
     if (!response.data) {
-      throw new Error('Sign up failed');
+      throw new Error('Sign up failed - no data returned');
     }
 
     return {
@@ -65,18 +63,23 @@ class AuthService {
    * Sign in with social provider
    */
   async signInWithProvider(provider: 'google' | 'github'): Promise<void> {
-    await authSignIn.social({
+    const response = await authSignIn.social({
       provider,
     });
+
+    if (response.error) {
+      throw new Error(response.error.message || 'Social sign in failed');
+    }
   }
 
   /**
    * Sign out the current user
    */
   async signOut(): Promise<void> {
-    // Clear stored token
-    localStorage.removeItem('ugc-auth-token');
-    await authSignOut();
+    const response = await authSignOut();
+    if (response.error) {
+      console.error('Sign out error:', response.error);
+    }
   }
 
   /**
@@ -84,36 +87,6 @@ class AuthService {
    */
   async getSession() {
     const session = await authClient.getSession();
-    
-    // If no session from cookies, try using stored token
-    if (!session.data?.session) {
-      const storedToken = localStorage.getItem('ugc-auth-token');
-      if (storedToken) {
-        // Validate token by making a request with it
-        try {
-          const response = await fetch(`${import.meta.env.VITE_BETTER_AUTH_URL || 'http://localhost:3000'}/api/auth/get-session`, {
-            headers: {
-              'Authorization': `Bearer ${storedToken}`,
-            },
-            credentials: 'include',
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-            if (data.user) {
-              return {
-                session: { token: storedToken },
-                user: data.user,
-              };
-            }
-          }
-        } catch (error) {
-          console.log('Token validation failed:', error);
-          localStorage.removeItem('ugc-auth-token');
-        }
-      }
-    }
-    
     return session.data;
   }
 
@@ -121,36 +94,51 @@ class AuthService {
    * Update user profile
    */
   async updateProfile(data: Partial<User>): Promise<User> {
-    const response = await apiClient.patch('/auth/user', data);
-    return response.data;
+    const response = await authClient.updateUser(data);
+    if (response.error) {
+      throw new Error(response.error.message || 'Profile update failed');
+    }
+    return response.data as User;
   }
 
   /**
    * Request password reset
    */
   async forgotPassword(email: string): Promise<void> {
-    await authClient.forgetPassword({
+    const response = await authClient.forgetPassword({
       email,
       redirectTo: `${window.location.origin}/auth/reset-password`,
     });
+    
+    if (response.error) {
+      throw new Error(response.error.message || 'Password reset failed');
+    }
   }
 
   /**
    * Reset password with token
    */
   async resetPassword(newPassword: string): Promise<void> {
-    await authClient.resetPassword({
+    const response = await authClient.resetPassword({
       newPassword,
     });
+    
+    if (response.error) {
+      throw new Error(response.error.message || 'Password reset failed');
+    }
   }
 
   /**
    * Verify email address
    */
   async verifyEmail(token: string): Promise<void> {
-    await authClient.verifyEmail({
+    const response = await authClient.verifyEmail({
       query: { token },
     });
+    
+    if (response.error) {
+      throw new Error(response.error.message || 'Email verification failed');
+    }
   }
 }
 

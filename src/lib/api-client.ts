@@ -16,14 +16,9 @@ export const apiClient: AxiosInstance = axios.create({
   withCredentials: true, // Important for auth cookies
 });
 
-// Request interceptor to add auth token
+// Request interceptor 
 apiClient.interceptors.request.use(
   async (config) => {
-    // Add token from localStorage if available (fallback for cross-domain issues)
-    const token = localStorage.getItem('ugc-auth-token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     // Better Auth handles auth automatically with cookies
     return config;
   },
@@ -36,23 +31,15 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config;
-
     // Handle 401 Unauthorized
-    if (error.response?.status === 401 && originalRequest) {
-      // Clear invalid token
-      localStorage.removeItem('ugc-auth-token');
+    if (error.response?.status === 401) {
+      console.log('🚫 401 Unauthorized - redirecting to login');
       
-      // Try to refresh the session
-      try {
-        await authClient.getSession();
-        // Retry the original request
-        return apiClient(originalRequest);
-      } catch (refreshError) {
-        // Refresh failed, redirect to login
-        await signOut();
-        window.location.href = '/auth/login';
-      }
+      // Sign out to clear session
+      await signOut();
+      window.location.href = '/auth/login';
+      
+      return Promise.reject(error);
     }
 
     // Handle other errors
