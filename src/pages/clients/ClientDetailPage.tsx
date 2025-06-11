@@ -32,34 +32,34 @@ import {
   Tooltip,
 } from '@mantine/core';
 import {
-  IconArchive,
-  IconArrowLeft,
-  IconBrandGoogleDrive,
-  IconBrandLinkedin,
-  IconBrandTwitter,
-  IconBriefcase,
-  IconBuilding,
-  IconCalendar,
-  IconChartBar,
-  IconCheck,
-  IconClock,
-  IconCurrencyDollar,
-  IconDots,
-  IconEdit,
-  IconExternalLink,
-  IconFileDescription,
-  IconMail,
-  IconMapPin,
-  IconMessage,
-  IconPhone,
-  IconPlus,
-  IconTrash,
-  IconTrendingUp,
-  IconUser,
-  IconVideo,
-  IconWorld,
-  IconX,
-} from '@tabler/icons-react';
+  Archive,
+  ArrowLeft,
+  HardDrive,
+  Linkedin,
+  Twitter,
+  Briefcase,
+  Building,
+  Calendar,
+  BarChart3 as IconChartBar,
+  Check,
+  Clock,
+  DollarSign,
+  MoreVertical,
+  Edit,
+  ExternalLink,
+  FileText,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Plus,
+  Trash2,
+  TrendingUp,
+  User,
+  Video,
+  Globe,
+  X
+} from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { useState } from 'react';
@@ -170,7 +170,7 @@ export function ClientDetailPage() {
           <Grid.Col span={{ base: 12, md: 8 }}>
             <Group align="flex-start" gap="lg">
               <Avatar size={80} radius="md" color="blue">
-                <IconBuilding size={36} />
+                <Building size={36} />
               </Avatar>
               <div style={{ flex: 1 }}>
                 <Group gap="sm" align="center" mb="xs">
@@ -184,18 +184,18 @@ export function ClientDetailPage() {
                 </Text>
                 <Group gap="xl">
                   <Group gap="xs">
-                    <IconMail size={16} className="text-gray-400" />
+                    <Mail size={16} className="text-gray-400" />
                     <Text size="sm">{client.email}</Text>
                   </Group>
                   {client.phone && (
                     <Group gap="xs">
-                      <IconPhone size={16} className="text-gray-400" />
+                      <Phone size={16} className="text-gray-400" />
                       <Text size="sm">{client.phone}</Text>
                     </Group>
                   )}
                   {client.website && (
                     <Group gap="xs">
-                      <IconWorld size={16} className="text-gray-400" />
+                      <Globe size={16} className="text-gray-400" />
                       <Anchor href={client.website} target="_blank" size="sm">
                         Website
                       </Anchor>
@@ -209,13 +209,13 @@ export function ClientDetailPage() {
             <Group justify="flex-end">
               <Button
                 variant="light"
-                leftSection={<IconMessage size={16} />}
+                leftSection={<MessageSquare size={16} />}
                 onClick={() => navigate('/messages', { state: { clientId: client.id } })}
               >
                 Message
               </Button>
               <Button
-                leftSection={<IconPlus size={16} />}
+                leftSection={<Plus size={16} />}
                 onClick={() => navigate('/campaigns/new', { state: { clientId: client.id } })}
               >
                 New Campaign
@@ -223,24 +223,24 @@ export function ClientDetailPage() {
               <Menu position="bottom-end" withArrow>
                 <Menu.Target>
                   <ActionIcon variant="light" size="lg">
-                    <IconDots size={20} />
+                    <MoreVertical size={20} />
                   </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item
-                    leftSection={<IconEdit size={16} />}
+                    leftSection={<Edit size={16} />}
                     onClick={() => navigate(`/clients/${client.id}/edit`)}
                   >
                     Edit Client
                   </Menu.Item>
                   <Menu.Item
-                    leftSection={<IconArchive size={16} />}
+                    leftSection={<Archive size={16} />}
                     color={client.status === 'ARCHIVED' ? 'green' : 'yellow'}
                   >
                     {client.status === 'ARCHIVED' ? 'Reactivate' : 'Archive'}
                   </Menu.Item>
                   <Menu.Divider />
-                  <Menu.Item leftSection={<IconTrash size={16} />} color="red">
+                  <Menu.Item leftSection={<Trash2 size={16} />} color="red">
                     Delete Client
                   </Menu.Item>
                 </Menu.Dropdown>
@@ -258,7 +258,7 @@ export function ClientDetailPage() {
                   Total Campaigns
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="blue">
-                  <IconBriefcase size={16} />
+                  <Briefcase size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -276,7 +276,7 @@ export function ClientDetailPage() {
                   Total Spent
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="green">
-                  <IconCurrencyDollar size={16} />
+                  <DollarSign size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -294,7 +294,7 @@ export function ClientDetailPage() {
                   Creators Worked
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="purple">
-                  <IconUser size={16} />
+                  <User size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -342,16 +342,16 @@ export function ClientDetailPage() {
             <Tabs.Tab value="overview" leftSection={<IconChartBar size={16} />}>
               Overview
             </Tabs.Tab>
-            <Tabs.Tab value="campaigns" leftSection={<IconBriefcase size={16} />}>
+            <Tabs.Tab value="campaigns" leftSection={<Briefcase size={16} />}>
               Campaigns ({campaigns?.campaigns.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="creators" leftSection={<IconUser size={16} />}>
+            <Tabs.Tab value="creators" leftSection={<User size={16} />}>
               Creators ({creators?.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="activity" leftSection={<IconClock size={16} />}>
+            <Tabs.Tab value="activity" leftSection={<Clock size={16} />}>
               Activity
             </Tabs.Tab>
-            <Tabs.Tab value="details" leftSection={<IconFileDescription size={16} />}>
+            <Tabs.Tab value="details" leftSection={<FileText size={16} />}>
               Details
             </Tabs.Tab>
           </Tabs.List>
@@ -409,7 +409,7 @@ export function ClientDetailPage() {
                                 variant="subtle"
                                 onClick={() => navigate(`/campaigns/${campaign.id}`)}
                               >
-                                <IconExternalLink size={16} />
+                                <ExternalLink size={16} />
                               </ActionIcon>
                             </Group>
                           </Paper>
@@ -536,18 +536,18 @@ export function ClientDetailPage() {
                     </Text>
                     <Stack gap="sm">
                       <Group gap="xs">
-                        <IconMail size={16} className="text-gray-400" />
+                        <Mail size={16} className="text-gray-400" />
                         <Text size="sm">{client.email}</Text>
                       </Group>
                       {client.phone && (
                         <Group gap="xs">
-                          <IconPhone size={16} className="text-gray-400" />
+                          <Phone size={16} className="text-gray-400" />
                           <Text size="sm">{client.phone}</Text>
                         </Group>
                       )}
                       {client.website && (
                         <Group gap="xs">
-                          <IconWorld size={16} className="text-gray-400" />
+                          <Globe size={16} className="text-gray-400" />
                           <Anchor href={client.website} target="_blank" size="sm">
                             {client.website}
                           </Anchor>
@@ -555,7 +555,7 @@ export function ClientDetailPage() {
                       )}
                       {client.location && (
                         <Group gap="xs">
-                          <IconMapPin size={16} className="text-gray-400" />
+                          <MapPin size={16} className="text-gray-400" />
                           <Text size="sm">{client.location}</Text>
                         </Group>
                       )}
@@ -573,12 +573,12 @@ export function ClientDetailPage() {
               </Center>
             ) : campaigns?.campaigns.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconBriefcase size={48} className="text-gray-300 mx-auto mb-4" />
+                <Briefcase size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed" mb="md">
                   No campaigns yet
                 </Text>
                 <Button
-                  leftSection={<IconPlus size={16} />}
+                  leftSection={<Plus size={16} />}
                   onClick={() => navigate('/campaigns/new', { state: { clientId: client.id } })}
                 >
                   Create First Campaign
@@ -659,7 +659,7 @@ export function ClientDetailPage() {
               </Center>
             ) : creators?.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconUser size={48} className="text-gray-300 mx-auto mb-4" />
+                <User size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed">No creators have worked with this client yet</Text>
               </Paper>
             ) : (
@@ -668,7 +668,7 @@ export function ClientDetailPage() {
                   <Card key={creator.id} shadow="sm" radius="md" withBorder>
                     <Group mb="md">
                       <Avatar size={50} radius="xl" color="blue">
-                        {creator.name?.charAt(0) || <IconUser size={24} />}
+                        {creator.name?.charAt(0) || <User size={24} />}
                       </Avatar>
                       <div style={{ flex: 1 }}>
                         <Text fw={500}>{creator.name}</Text>
@@ -714,7 +714,7 @@ export function ClientDetailPage() {
 
           <Tabs.Panel value="activity" pt="md">
             <Timeline active={-1} bulletSize={24} lineWidth={2}>
-              <Timeline.Item bullet={<IconPlus size={12} />} title="Client Added">
+              <Timeline.Item bullet={<Plus size={12} />} title="Client Added">
                 <Text c="dimmed" size="sm">
                   {new Date(client.createdAt).toLocaleDateString()}
                 </Text>
@@ -725,7 +725,7 @@ export function ClientDetailPage() {
               {campaigns?.campaigns.slice(0, 5).map((campaign: any) => (
                 <Timeline.Item
                   key={campaign.id}
-                  bullet={<IconBriefcase size={12} />}
+                  bullet={<Briefcase size={12} />}
                   title={`Campaign Created: ${campaign.title}`}
                 >
                   <Text c="dimmed" size="sm">

@@ -9,7 +9,6 @@ import { AuthLayout } from '@/components/layouts/AuthLayout';
 import { RootLayout } from '@/components/layouts/RootLayout';
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { RegisterPage } from '@/pages/auth/RegisterPage';
-import { Role } from '@/types/auth.types';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // Lazy load pages for better performance
@@ -156,7 +155,7 @@ export const router = createBrowserRouter([
           {
             path: 'creators',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <CreatorsPage />
                 </Suspense>
@@ -166,7 +165,7 @@ export const router = createBrowserRouter([
           {
             path: 'creators/:id',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <CreatorDetailPage />
                 </Suspense>
@@ -176,7 +175,7 @@ export const router = createBrowserRouter([
           {
             path: 'creators/:id/edit',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <CreatorEditPage />
                 </Suspense>
@@ -186,7 +185,7 @@ export const router = createBrowserRouter([
           {
             path: 'clients',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <ClientsPage />
                 </Suspense>
@@ -196,7 +195,7 @@ export const router = createBrowserRouter([
           {
             path: 'clients/:id',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <ClientDetailPage />
                 </Suspense>
@@ -206,7 +205,7 @@ export const router = createBrowserRouter([
           {
             path: 'clients/:id/edit',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <ClientEditPage />
                 </Suspense>
@@ -256,7 +255,7 @@ export const router = createBrowserRouter([
           {
             path: 'organizations',
             element: (
-              <ProtectedRoute roles={[Role.ADMIN, Role.STAFF]}>
+              <ProtectedRoute roles={['ADMIN', 'STAFF']}>
                 <Suspense fallback={<PageLoader />}>
                   <OrganizationsPage />
                 </Suspense>

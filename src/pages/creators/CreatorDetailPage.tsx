@@ -33,40 +33,40 @@ import {
   Tooltip,
 } from '@mantine/core';
 import {
-  IconArrowLeft,
-  IconBrandGoogleDrive,
-  IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBriefcase,
-  IconBuilding,
-  IconCalendar,
-  IconChartBar,
-  IconCheck,
-  IconClock,
-  IconCurrencyDollar,
-  IconDots,
-  IconDownload,
-  IconEdit,
-  IconExternalLink,
-  IconEye,
-  IconFileDescription,
-  IconFolder,
-  IconMail,
-  IconMapPin,
-  IconMessage,
-  IconMicrophone,
-  IconPencil,
-  IconPhone,
-  IconPhoto,
-  IconPlus,
-  IconStar,
-  IconTrash,
-  IconTrendingUp,
-  IconUser,
-  IconVideo,
-  IconWorld,
-  IconX,
-} from '@tabler/icons-react';
+  ArrowLeft,
+  HardDrive,
+  Instagram,
+  Linkedin,
+  Briefcase,
+  Building,
+  Calendar,
+  BarChart3 as IconChartBar,
+  Check,
+  Clock,
+  DollarSign,
+  MoreVertical,
+  Download,
+  Edit,
+  ExternalLink,
+  Eye,
+  FileText,
+  FolderOpen,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Mic,
+  Edit3,
+  Phone,
+  Image,
+  Plus,
+  Star,
+  Trash2,
+  TrendingUp,
+  User,
+  Video,
+  Globe,
+  X
+} from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { useState } from 'react';
@@ -98,10 +98,10 @@ const orderStatusColors = {
 };
 
 const skillIcons: Record<string, any> = {
-  'video-editing': IconVideo,
-  photography: IconPhoto,
-  copywriting: IconPencil,
-  'voice-over': IconMicrophone,
+  'video-editing': Video,
+  photography: Image,
+  copywriting: Edit3,
+  'voice-over': Mic,
 };
 
 export function CreatorDetailPage() {
@@ -233,7 +233,7 @@ export function CreatorDetailPage() {
                 color="blue"
                 className="ring-4 ring-blue-100"
               >
-                {creator.name?.charAt(0).toUpperCase() || <IconUser size={36} />}
+                {creator.name?.charAt(0).toUpperCase() || <User size={36} />}
               </Avatar>
               <div style={{ flex: 1 }}>
                 <Group gap="sm" align="center" mb="xs">
@@ -242,24 +242,24 @@ export function CreatorDetailPage() {
                     {creator.status || 'Active'}
                   </Badge>
                   <Group gap={4}>
-                    <IconStar size={16} className="text-yellow-500 fill-yellow-500" />
+                    <Star size={16} className="text-yellow-500 fill-yellow-500" />
                     <Text fw={500}>{rating.toFixed(1)}</Text>
                   </Group>
                 </Group>
                 <Group gap="xl" mb="sm">
                   <Group gap="xs">
-                    <IconMail size={16} className="text-gray-400" />
+                    <Mail size={16} className="text-gray-400" />
                     <Text size="sm">{creator.email}</Text>
                   </Group>
                   {creator.phone && (
                     <Group gap="xs">
-                      <IconPhone size={16} className="text-gray-400" />
+                      <Phone size={16} className="text-gray-400" />
                       <Text size="sm">{creator.phone}</Text>
                     </Group>
                   )}
                   {creator.socialMedia && (
                     <Group gap="xs">
-                      <IconBrandInstagram size={16} className="text-gray-400" />
+                      <Instagram size={16} className="text-gray-400" />
                       <Text size="sm">{creator.socialMedia}</Text>
                     </Group>
                   )}
@@ -288,13 +288,13 @@ export function CreatorDetailPage() {
             <Group justify="flex-end">
               <Button
                 variant="light"
-                leftSection={<IconMessage size={16} />}
+                leftSection={<MessageSquare size={16} />}
                 onClick={() => navigate('/messages', { state: { creatorId: creator.id } })}
               >
                 Message
               </Button>
               <Button
-                leftSection={<IconBriefcase size={16} />}
+                leftSection={<Briefcase size={16} />}
                 onClick={() => setAssignModalOpened(true)}
               >
                 Assign to Campaign
@@ -302,18 +302,18 @@ export function CreatorDetailPage() {
               <Menu position="bottom-end" withArrow>
                 <Menu.Target>
                   <ActionIcon variant="light" size="lg">
-                    <IconDots size={20} />
+                    <MoreVertical size={20} />
                   </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item
-                    leftSection={<IconEdit size={16} />}
+                    leftSection={<Edit size={16} />}
                     onClick={() => navigate(`/creators/${creator.id}/edit`)}
                   >
                     Edit Creator
                   </Menu.Item>
                   <Menu.Item
-                    leftSection={<IconFolder size={16} />}
+                    leftSection={<FolderOpen size={16} />}
                     onClick={() => window.open(driveInfo?.folderLink, '_blank')}
                     disabled={!driveInfo?.folderLink}
                   >
@@ -321,7 +321,7 @@ export function CreatorDetailPage() {
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item
-                    leftSection={<IconTrash size={16} />}
+                    leftSection={<Trash2 size={16} />}
                     color="red"
                     disabled={orders && orders.length > 0}
                   >
@@ -342,7 +342,7 @@ export function CreatorDetailPage() {
                   Total Orders
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="blue">
-                  <IconBriefcase size={16} />
+                  <Briefcase size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -360,7 +360,7 @@ export function CreatorDetailPage() {
                   Total Earnings
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="green">
-                  <IconCurrencyDollar size={16} />
+                  <DollarSign size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -400,7 +400,7 @@ export function CreatorDetailPage() {
                   Content Pieces
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="purple">
-                  <IconVideo size={16} />
+                  <Video size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -419,16 +419,16 @@ export function CreatorDetailPage() {
             <Tabs.Tab value="overview" leftSection={<IconChartBar size={16} />}>
               Overview
             </Tabs.Tab>
-            <Tabs.Tab value="orders" leftSection={<IconBriefcase size={16} />}>
+            <Tabs.Tab value="orders" leftSection={<Briefcase size={16} />}>
               Orders ({orders?.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="clients" leftSection={<IconBuilding size={16} />}>
+            <Tabs.Tab value="clients" leftSection={<Building size={16} />}>
               Clients ({clients?.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="content" leftSection={<IconVideo size={16} />}>
+            <Tabs.Tab value="content" leftSection={<Video size={16} />}>
               Content ({media?.media?.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="profile" leftSection={<IconUser size={16} />}>
+            <Tabs.Tab value="profile" leftSection={<User size={16} />}>
               Profile
             </Tabs.Tab>
           </Tabs.List>
@@ -484,7 +484,7 @@ export function CreatorDetailPage() {
                                 variant="subtle"
                                 onClick={() => navigate(`/campaigns/${order.campaign?.id}`)}
                               >
-                                <IconExternalLink size={16} />
+                                <ExternalLink size={16} />
                               </ActionIcon>
                             </Group>
                           </Paper>
@@ -625,13 +625,13 @@ export function CreatorDetailPage() {
                           Media Folder
                         </Text>
                         <ActionIcon variant="light" color="blue">
-                          <IconBrandGoogleDrive size={20} />
+                          <HardDrive size={20} />
                         </ActionIcon>
                       </Group>
                       <Stack gap="sm">
                         <Button
                           variant="light"
-                          leftSection={<IconFolder size={16} />}
+                          leftSection={<FolderOpen size={16} />}
                           fullWidth
                           onClick={() => window.open(driveInfo.folderLink, '_blank')}
                         >
@@ -668,12 +668,12 @@ export function CreatorDetailPage() {
               </Center>
             ) : orders?.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconBriefcase size={48} className="text-gray-300 mx-auto mb-4" />
+                <Briefcase size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed" mb="md">
                   No orders assigned yet
                 </Text>
                 <Button
-                  leftSection={<IconBriefcase size={16} />}
+                  leftSection={<Briefcase size={16} />}
                   onClick={() => setAssignModalOpened(true)}
                 >
                   Assign to Campaign
@@ -755,7 +755,7 @@ export function CreatorDetailPage() {
               </Center>
             ) : clients?.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconBuilding size={48} className="text-gray-300 mx-auto mb-4" />
+                <Building size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed">No clients worked with yet</Text>
               </Paper>
             ) : (
@@ -764,7 +764,7 @@ export function CreatorDetailPage() {
                   <Card key={client.id} shadow="sm" radius="md" withBorder>
                     <Group mb="md">
                       <Avatar size={50} radius="md" color="blue">
-                        <IconBuilding size={24} />
+                        <Building size={24} />
                       </Avatar>
                       <div style={{ flex: 1 }}>
                         <Text fw={500}>{client.name}</Text>
@@ -831,11 +831,11 @@ export function CreatorDetailPage() {
               </Center>
             ) : media?.media?.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconVideo size={48} className="text-gray-300 mx-auto mb-4" />
+                <Video size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed" mb="md">
                   No content uploaded yet
                 </Text>
-                <Button leftSection={<IconVideo size={16} />} onClick={() => navigate('/media')}>
+                <Button leftSection={<Video size={16} />} onClick={() => navigate('/media')}>
                   Upload Content
                 </Button>
               </Paper>
@@ -856,7 +856,7 @@ export function CreatorDetailPage() {
                         h={200}
                         className="bg-gray-100 flex items-center justify-center"
                       >
-                        <IconVideo size={48} className="text-gray-400" />
+                        <Video size={48} className="text-gray-400" />
                       </Card.Section>
                     )}
                     <Stack gap="xs" mt="md">
@@ -875,7 +875,7 @@ export function CreatorDetailPage() {
                         <Button
                           variant="light"
                           size="xs"
-                          leftSection={<IconEye size={14} />}
+                          leftSection={<Eye size={14} />}
                           onClick={() => window.open(item.url, '_blank')}
                         >
                           View
@@ -883,7 +883,7 @@ export function CreatorDetailPage() {
                         <Button
                           variant="light"
                           size="xs"
-                          leftSection={<IconDownload size={14} />}
+                          leftSection={<Download size={14} />}
                           onClick={() => {
                             const a = document.createElement('a');
                             a.href = item.url;
@@ -969,7 +969,7 @@ export function CreatorDetailPage() {
                             Social Media
                           </Text>
                           <Group gap="xs">
-                            <IconBrandInstagram size={16} />
+                            <Instagram size={16} />
                             <Text size="sm">{creator.socialMedia}</Text>
                           </Group>
                         </div>

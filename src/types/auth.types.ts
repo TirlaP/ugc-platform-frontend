@@ -1,64 +1,29 @@
 /**
- * Authentication type definitions
- * Aligned with Better Auth and our extended user model
+ * Authentication types
  */
 
-export enum Role {
-  ADMIN = 'ADMIN',
-  STAFF = 'STAFF',
-  CREATOR = 'CREATOR',
-  CLIENT = 'CLIENT',
-}
-
-export enum UserStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-  SUSPENDED = 'SUSPENDED',
-}
+export type Role = 'ADMIN' | 'STAFF' | 'CLIENT' | 'CREATOR';
 
 export interface User {
   id: string;
   email: string;
-  name?: string;
-  image?: string;
-  emailVerified?: boolean;
+  name: string | null;
+  role: Role | null;
+  phone?: string | null;
+  bio?: string | null;
+  image?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  banned?: boolean;
+  banReason?: string | null;
+  banExpires?: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
-
-  // Extended fields for our app (simplified to match Better Auth schema)
-  role?: string;
-  phone?: string;
-  banned?: boolean;
-  banReason?: string;
-  banExpires?: Date;
-  firstName?: string;
-  lastName?: string;
 }
 
-export interface UserRates {
-  hourly?: number;
-  perPost?: number;
-  perCampaign?: number;
-  currency: string;
-}
-
-export interface UserAvailability {
-  daysPerWeek: number;
-  hoursPerDay: number;
-  timezone: string;
-  blockedDates?: Date[];
-}
-
-export interface Session {
+export interface AuthResponse {
+  token: string;
   user: User;
-  expires: Date;
-}
-
-export interface AuthState {
-  user: User | null;
-  session: Session | null;
-  isLoading: boolean;
-  isAuthenticated: boolean;
 }
 
 export interface LoginCredentials {
@@ -66,13 +31,21 @@ export interface LoginCredentials {
   password: string;
 }
 
-export interface RegisterData extends LoginCredentials {
+export interface RegisterData {
+  email: string;
+  password: string;
   name: string;
-  role?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  role?: Role;
+  organizationName?: string;
 }
 
-export interface AuthResponse {
-  user: User;
-  session: Session;
-  token?: string;
+export interface UpdateProfileData {
+  name?: string;
+  phone?: string;
+  bio?: string;
+  firstName?: string;
+  lastName?: string;
 }

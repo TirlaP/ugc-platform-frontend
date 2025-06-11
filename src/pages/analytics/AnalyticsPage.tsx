@@ -21,17 +21,17 @@ import {
   Title,
 } from '@mantine/core';
 import {
-  IconBriefcase,
-  IconCalendar,
-  IconChartBar,
-  IconChartLine,
-  IconChartPie,
-  IconCurrencyDollar,
-  IconDownload,
-  IconFilter,
-  IconTrendingUp,
-  IconUsers,
-} from '@tabler/icons-react';
+  Briefcase,
+  Calendar,
+  BarChart3 as IconChartBar,
+  LineChart,
+  PieChart,
+  DollarSign,
+  Download,
+  Filter,
+  TrendingUp,
+  Users
+} from 'lucide-react';
 import { useState } from 'react';
 
 // Mock data for charts
@@ -94,7 +94,7 @@ export function AnalyticsPage() {
                   size="sm"
                   className="w-40"
                 />
-                <Button leftSection={<IconDownload size={16} />} variant="light" size="sm">
+                <Button leftSection={<Download size={16} />} variant="light" size="sm">
                   Export Report
                 </Button>
               </Group>
@@ -108,7 +108,7 @@ export function AnalyticsPage() {
                 title="Total Revenue"
                 value="$328k"
                 subtitle="All time earnings"
-                icon={IconCurrencyDollar}
+                icon={DollarSign}
                 color="green"
                 trend={{ value: 23, label: 'vs last period' }}
               />
@@ -118,7 +118,7 @@ export function AnalyticsPage() {
                 title="Active Campaigns"
                 value="12"
                 subtitle="Currently running"
-                icon={IconBriefcase}
+                icon={Briefcase}
                 color="blue"
                 trend={{ value: 8, label: 'vs last period' }}
               />
@@ -138,7 +138,7 @@ export function AnalyticsPage() {
                 title="Active Creators"
                 value="45"
                 subtitle="Working on campaigns"
-                icon={IconUsers}
+                icon={Users}
                 color="orange"
                 trend={{ value: 12, label: 'vs last period' }}
               />
@@ -161,7 +161,7 @@ export function AnalyticsPage() {
                     Revenue Overview
                   </Title>
                   <ThemeIcon size="sm" radius="md" variant="light" color="blue">
-                    <IconChartLine size={16} />
+                    <LineChart size={16} />
                   </ThemeIcon>
                 </Group>
                 <div className="h-64 flex items-center justify-center bg-gray-50 rounded-md">
@@ -186,7 +186,7 @@ export function AnalyticsPage() {
                     Campaign Status
                   </Title>
                   <ThemeIcon size="sm" radius="md" variant="light" color="purple">
-                    <IconChartPie size={16} />
+                    <PieChart size={16} />
                   </ThemeIcon>
                 </Group>
                 <Stack gap="sm">

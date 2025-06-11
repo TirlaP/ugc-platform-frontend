@@ -5,7 +5,6 @@
 
 import { ActivityCard } from '@/components/dashboard/ActivityCard';
 import { StatsCard } from '@/components/dashboard/StatsCard';
-import { RoleSwitcher } from '@/components/dev/RoleSwitcher';
 import { useAuth } from '@/hooks/useAuth';
 import { dashboardService } from '@/services/dashboard.service';
 import {
@@ -20,17 +19,17 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import {
-  IconBriefcase,
-  IconCheck,
-  IconClock,
-  IconCurrencyDollar,
-  IconEye,
-  IconPlus,
-  IconTrendingUp,
-  IconUsers,
-} from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
+import {
+  Briefcase,
+  Check,
+  Clock,
+  DollarSign,
+  Eye,
+  Plus,
+  TrendingUp,
+  Users
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export function DashboardPage() {
@@ -54,13 +53,13 @@ export function DashboardPage() {
     switch (userRole) {
       case 'ADMIN':
       case 'STAFF':
-        return { label: 'Create Campaign', path: '/campaigns', icon: IconPlus };
+        return { label: 'Create Campaign', path: '/campaigns', icon: Plus };
       case 'CREATOR':
-        return { label: 'View My Orders', path: '/orders', icon: IconBriefcase };
+        return { label: 'View My Orders', path: '/orders', icon: Briefcase };
       case 'CLIENT':
-        return { label: 'New Campaign', path: '/campaigns', icon: IconPlus };
+        return { label: 'New Campaign', path: '/campaigns', icon: Plus };
       default:
-        return { label: 'Get Started', path: '/profile', icon: IconPlus };
+        return { label: 'Get Started', path: '/profile', icon: Plus };
     }
   };
 
@@ -108,7 +107,7 @@ export function DashboardPage() {
               </div>
               <Group gap="sm">
                 <Button
-                  leftSection={<IconEye size={16} />}
+                  leftSection={<Eye size={16} />}
                   variant="light"
                   size="sm"
                   className="hover:shadow-sm transition-all"
@@ -131,7 +130,7 @@ export function DashboardPage() {
           {getDashboardContent()}
 
           {/* Development Role Switcher */}
-          <RoleSwitcher />
+          {/* <RoleSwitcher /> */}
         </Stack>
       </Container>
     </div>
@@ -179,7 +178,7 @@ function AdminDashboard({ stats, activities, isLoading }: any) {
             title="Total Campaigns"
             value={stats?.campaigns?.total || 0}
             subtitle={`${stats?.campaigns?.active || 0} active`}
-            icon={IconBriefcase}
+            icon={Briefcase}
             color="blue"
             trend={{ value: 12, label: 'vs last month' }}
             delay={0}
@@ -191,7 +190,7 @@ function AdminDashboard({ stats, activities, isLoading }: any) {
             title="Active Creators"
             value={stats?.creators?.total || 0}
             subtitle="Content creators"
-            icon={IconUsers}
+            icon={Users}
             color="green"
             trend={{ value: 8, label: 'vs last month' }}
             delay={100}
@@ -203,7 +202,7 @@ function AdminDashboard({ stats, activities, isLoading }: any) {
             title="Total Clients"
             value={stats?.clients?.total || 0}
             subtitle={`${stats?.clients?.active || 0} active`}
-            icon={IconTrendingUp}
+            icon={TrendingUp}
             color="purple"
             trend={{ value: 5, label: 'vs last month' }}
             delay={200}
@@ -215,7 +214,7 @@ function AdminDashboard({ stats, activities, isLoading }: any) {
             title="Revenue"
             value={`$${stats?.revenue?.total ? (Number(stats.revenue.total) / 1000).toFixed(1) : 0}k`}
             subtitle="Campaign budgets"
-            icon={IconCurrencyDollar}
+            icon={DollarSign}
             color="orange"
             trend={{ value: 23, label: 'vs last month' }}
             delay={300}
@@ -295,7 +294,7 @@ function CreatorDashboard({ stats, isLoading }: any) {
           title="Active Orders"
           value={stats?.orders?.inProgress || 0}
           subtitle="Orders in progress"
-          icon={IconClock}
+          icon={Clock}
           color="yellow"
           trend={{ value: 15, label: 'vs last week' }}
           delay={0}
@@ -307,7 +306,7 @@ function CreatorDashboard({ stats, isLoading }: any) {
           title="Completed"
           value={stats?.orders?.completed || 0}
           subtitle="Orders completed"
-          icon={IconCheck}
+          icon={Check}
           color="green"
           trend={{ value: 20, label: 'vs last week' }}
           delay={100}
@@ -319,7 +318,7 @@ function CreatorDashboard({ stats, isLoading }: any) {
           title="Total Revenue"
           value={`$${stats?.revenue?.total ? (Number(stats.revenue.total) / 1000).toFixed(1) : 0}k`}
           subtitle="From campaigns"
-          icon={IconCurrencyDollar}
+          icon={DollarSign}
           color="green"
           trend={{ value: 18, label: 'vs last week' }}
           delay={200}
@@ -354,7 +353,7 @@ function ClientDashboard({ stats, isLoading }: any) {
           title="Active Campaigns"
           value={stats?.campaigns?.active || 0}
           subtitle="In progress"
-          icon={IconBriefcase}
+          icon={Briefcase}
           color="blue"
           trend={{ value: 10, label: 'vs last month' }}
           delay={0}
@@ -366,7 +365,7 @@ function ClientDashboard({ stats, isLoading }: any) {
           title="Total Orders"
           value={stats?.orders?.total || 0}
           subtitle="Content pieces"
-          icon={IconCheck}
+          icon={Check}
           color="purple"
           trend={{ value: 25, label: 'vs last month' }}
           delay={100}
@@ -378,7 +377,7 @@ function ClientDashboard({ stats, isLoading }: any) {
           title="Creators Working"
           value={stats?.creators?.total || 0}
           subtitle="Available creators"
-          icon={IconUsers}
+          icon={Users}
           color="green"
           trend={{ value: 5, label: 'vs last month' }}
           delay={200}

@@ -19,7 +19,12 @@ import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconBuilding, IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
+import {
+  Building,
+  Edit,
+  Eye,
+  Trash2
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -138,7 +143,7 @@ export function OrganizationsPage() {
       render: (org: any) => (
         <Group gap="sm">
           <Avatar src={org.logo} alt={org.name} size="sm" radius="sm" color="blue">
-            <IconBuilding size={16} />
+            <Building size={16} />
           </Avatar>
           <div>
             <Text size="sm" fw={500}>
@@ -181,7 +186,7 @@ export function OrganizationsPage() {
   const actions = [
     {
       label: 'View',
-      icon: IconEye,
+      icon: Eye,
       onClick: (org: any) => {
         // TODO: Navigate to organization details
         console.log('View organization:', org.id);
@@ -189,12 +194,12 @@ export function OrganizationsPage() {
     },
     {
       label: 'Edit',
-      icon: IconEdit,
+      icon: Edit,
       onClick: handleEdit,
     },
     {
       label: 'Delete',
-      icon: IconTrash,
+      icon: Trash2,
       color: 'red',
       onClick: handleDelete,
       hidden: (org: any) => org._count?.members > 0 || org._count?.campaigns > 0,

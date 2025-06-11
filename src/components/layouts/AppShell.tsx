@@ -17,63 +17,62 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
-  IconBriefcase,
-  IconBuilding,
-  IconChartBar,
-  IconChevronRight,
-  IconDashboard,
-  IconLogout,
-  IconMessage,
-  IconPhoto,
-  IconSettings,
-  IconUser,
-  IconUsers,
-  IconUsersGroup,
-} from '@tabler/icons-react';
+  BarChart3,
+  Briefcase,
+  Building,
+  ChevronRight,
+  Home,
+  Image,
+  LogOut,
+  MessageSquare,
+  Settings,
+  User,
+  Users,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const navigation = [
   {
     label: 'Dashboard',
-    icon: IconDashboard,
+    icon: Home,
     href: '/dashboard',
     gradient: 'from-blue-500 to-blue-600',
   },
   {
     label: 'Analytics',
-    icon: IconChartBar,
+    icon: BarChart3,
     href: '/analytics',
     gradient: 'from-indigo-500 to-indigo-600',
   },
   {
     label: 'Campaigns',
-    icon: IconBriefcase,
+    icon: Briefcase,
     href: '/campaigns',
     gradient: 'from-purple-500 to-purple-600',
   },
   {
     label: 'Creators',
-    icon: IconUsers,
+    icon: Users,
     href: '/creators',
     gradient: 'from-green-500 to-green-600',
   },
   {
     label: 'Clients',
-    icon: IconUsersGroup,
+    icon: Building,
     href: '/clients',
     gradient: 'from-orange-500 to-orange-600',
   },
-  { label: 'Media', icon: IconPhoto, href: '/media', gradient: 'from-pink-500 to-pink-600' },
+  { label: 'Media', icon: Image, href: '/media', gradient: 'from-pink-500 to-pink-600' },
   {
     label: 'Messages',
-    icon: IconMessage,
+    icon: MessageSquare,
     href: '/messages',
     gradient: 'from-teal-500 to-teal-600',
   },
   {
     label: 'Organizations',
-    icon: IconBuilding,
+    icon: Building,
     href: '/organizations',
     gradient: 'from-gray-500 to-gray-600',
   },
@@ -166,7 +165,7 @@ export function AppShellLayout() {
                       {user?.email}
                     </Text>
                   </div>
-                  <IconChevronRight size={12} />
+                  <ChevronRight size={12} />
                 </Group>
               </UnstyledButton>
             </Menu.Target>
@@ -179,17 +178,17 @@ export function AppShellLayout() {
                   </Text>
                 )}
               </Menu.Label>
-              <Menu.Item leftSection={<IconUser size={14} />} onClick={() => navigate('/profile')}>
+              <Menu.Item leftSection={<User size={14} />} onClick={() => navigate('/profile')}>
                 Profile
               </Menu.Item>
               <Menu.Item
-                leftSection={<IconSettings size={14} />}
+                leftSection={<Settings size={14} />}
                 onClick={() => navigate('/settings')}
               >
                 Settings
               </Menu.Item>
               <Menu.Divider />
-              <Menu.Item color="red" leftSection={<IconLogout size={14} />} onClick={handleLogout}>
+              <Menu.Item color="red" leftSection={<LogOut size={14} />} onClick={handleLogout}>
                 Logout
               </Menu.Item>
             </Menu.Dropdown>
@@ -254,7 +253,7 @@ export function AppShellLayout() {
             <Button
               fullWidth
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
-              leftSection={<IconBriefcase size={16} />}
+              leftSection={<Briefcase size={16} />}
               onClick={() => navigate('/campaigns/new')}
               size="md"
             >

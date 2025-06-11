@@ -4,22 +4,23 @@
 
 import {
   Badge,
-  Button,
   Container,
   Group,
   Image,
   Modal,
-  Paper,
-  SimpleGrid,
   Stack,
   Text,
-  Title,
+  Title
 } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  Image as ImageIcon,
+  Upload,
+  X
+} from 'lucide-react';
 import { useState } from 'react';
 
 import { DataTable } from '@/components/common/DataTable';
@@ -118,7 +119,7 @@ export function MediaPage() {
           {media.type === 'IMAGE' ? (
             <Image src={media.url} alt={media.filename} w={40} h={40} radius="sm" />
           ) : (
-            <IconPhoto size={16} />
+            <ImageIcon size={16} />
           )}
           <div>
             <Text size="sm" fw={500}>
@@ -164,14 +165,14 @@ export function MediaPage() {
   const actions = [
     {
       label: 'Download',
-      icon: IconUpload,
+      icon: Upload,
       onClick: (media: any) => {
         window.open(media.url, '_blank');
       },
     },
     {
       label: 'Delete',
-      icon: IconX,
+      icon: X,
       color: 'red',
       onClick: (media: any) => deleteMutation.mutate(media.id),
     },
@@ -213,13 +214,13 @@ export function MediaPage() {
         >
           <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
             <Dropzone.Accept>
-              <IconUpload size={52} stroke={1.5} />
+              <Upload size={52} stroke={1.5} />
             </Dropzone.Accept>
             <Dropzone.Reject>
-              <IconX size={52} stroke={1.5} />
+              <X size={52} stroke={1.5} />
             </Dropzone.Reject>
             <Dropzone.Idle>
-              <IconPhoto size={52} stroke={1.5} />
+              <ImageIcon size={52} stroke={1.5} />
             </Dropzone.Idle>
 
             <div>

@@ -5,7 +5,10 @@
 import { Button, Group, Modal, Select, Stack, Text, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import {
+  Check,
+  X
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { campaignService } from '@/services/campaign.service';
@@ -55,7 +58,7 @@ export function AssignToCampaignModal({
         title: 'Success',
         message: `${creatorName} has been assigned to the campaign`,
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       onClose();
       form.reset();
@@ -65,7 +68,7 @@ export function AssignToCampaignModal({
         title: 'Error',
         message: error.response?.data?.error || 'Failed to assign creator to campaign',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });

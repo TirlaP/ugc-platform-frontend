@@ -4,3 +4,7 @@
   status = 200
   force = true
   headers = {X-From = "Netlify"}
+
+[build]
+  # Use npm instead of bun for Netlify
+  command = "npm run build"

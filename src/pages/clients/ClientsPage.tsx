@@ -31,31 +31,31 @@ import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import {
-  IconArchive,
-  IconArchiveOff,
-  IconBrandLinkedin,
-  IconBrandTwitter,
-  IconBriefcase,
-  IconBuilding,
-  IconCalendar,
-  IconCheck,
-  IconCurrencyDollar,
-  IconEdit,
-  IconEye,
-  IconFileDescription,
-  IconLayoutGrid,
-  IconMail,
-  IconMapPin,
-  IconMessage,
-  IconPhone,
-  IconTable,
-  IconTrash,
-  IconTrendingUp,
-  IconUser,
-  IconUsers,
-  IconWorld,
-  IconX,
-} from '@tabler/icons-react';
+  Archive,
+  ArchiveRestore,
+  Linkedin,
+  Twitter,
+  Briefcase,
+  Building,
+  Calendar,
+  Check,
+  DollarSign,
+  Edit,
+  Eye,
+  FileText,
+  LayoutGrid,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Table,
+  Trash2,
+  TrendingUp,
+  User,
+  Users,
+  Globe,
+  X
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -111,7 +111,7 @@ export function ClientsPage() {
         title: 'Success',
         message: editingClient ? 'Client updated successfully' : 'Client created successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       close();
       form.reset();
@@ -122,7 +122,7 @@ export function ClientsPage() {
         title: 'Error',
         message: 'Failed to save client',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -138,7 +138,7 @@ export function ClientsPage() {
         title: 'Success',
         message: archive ? 'Client archived successfully' : 'Client reactivated successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
     },
     onError: () => {
@@ -146,7 +146,7 @@ export function ClientsPage() {
         title: 'Error',
         message: 'Failed to update client status',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -160,7 +160,7 @@ export function ClientsPage() {
         title: 'Success',
         message: 'Client deleted successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
     },
     onError: () => {
@@ -168,7 +168,7 @@ export function ClientsPage() {
         title: 'Error',
         message: 'Failed to delete client',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -224,7 +224,7 @@ export function ClientsPage() {
           {client._count?.campaigns > 0 && (
             <Paper p="sm" radius="md" withBorder className="bg-red-50 border-red-200">
               <Group gap="xs">
-                <IconBriefcase size={16} className="text-red-600" />
+                <Briefcase size={16} className="text-red-600" />
                 <Text size="xs" c="red.8">
                   This client has {client._count.campaigns} campaigns that will also be deleted
                 </Text>
@@ -277,7 +277,7 @@ export function ClientsPage() {
         <Card.Section className="relative bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
           <Group justify="space-between" align="flex-start">
             <Avatar size={60} radius="md" className="ring-4 ring-white shadow-lg" color="blue">
-              <IconBuilding size={28} />
+              <Building size={28} />
             </Avatar>
             <Badge color={statusColors[client.status]} variant="light" size="sm" radius="md">
               {client.status}
@@ -294,7 +294,7 @@ export function ClientsPage() {
               {client.company}
             </Text>
             <Group gap="xs" mt={4}>
-              <IconMail size={14} className="text-gray-400" />
+              <Mail size={14} className="text-gray-400" />
               <Text size="sm" c="dimmed">
                 {client.email}
               </Text>
@@ -349,7 +349,7 @@ export function ClientsPage() {
 
           <Timeline active={-1} bulletSize={20} lineWidth={2} mt="sm">
             <Timeline.Item
-              bullet={<IconCalendar size={12} />}
+              bullet={<Calendar size={12} />}
               title={
                 <Text size="xs" c="dimmed">
                   Client since {new Date(client.createdAt).toLocaleDateString()}
@@ -368,7 +368,7 @@ export function ClientsPage() {
                   handleView(client);
                 }}
               >
-                <IconEye size={18} />
+                <Eye size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Send Message">
@@ -381,7 +381,7 @@ export function ClientsPage() {
                   navigate('/messages', { state: { clientId: client.id } });
                 }}
               >
-                <IconMessage size={18} />
+                <MessageSquare size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="New Campaign">
@@ -394,7 +394,7 @@ export function ClientsPage() {
                   navigate('/campaigns/new', { state: { clientId: client.id } });
                 }}
               >
-                <IconBriefcase size={18} />
+                <Briefcase size={18} />
               </ActionIcon>
             </Tooltip>
             {client.status !== 'ARCHIVED' && (
@@ -408,7 +408,7 @@ export function ClientsPage() {
                     handleEdit(client);
                   }}
                 >
-                  <IconEdit size={18} />
+                  <Edit size={18} />
                 </ActionIcon>
               </Tooltip>
             )}
@@ -426,7 +426,7 @@ export function ClientsPage() {
       render: (client: Client) => (
         <Group gap="sm">
           <Avatar color="blue" radius="md" size="md">
-            <IconBuilding size={20} />
+            <Building size={20} />
           </Avatar>
           <div>
             <Text size="sm" fw={600}>
@@ -445,12 +445,12 @@ export function ClientsPage() {
       render: (client: Client) => (
         <Stack gap={4}>
           <Group gap="xs">
-            <IconMail size={12} className="text-gray-400" />
+            <Mail size={12} className="text-gray-400" />
             <Text size="sm">{client.email}</Text>
           </Group>
           {client.phone && (
             <Group gap="xs">
-              <IconPhone size={12} className="text-gray-400" />
+              <Phone size={12} className="text-gray-400" />
               <Text size="sm" c="dimmed">
                 {client.phone}
               </Text>
@@ -521,24 +521,24 @@ export function ClientsPage() {
   const actions = [
     {
       label: 'View',
-      icon: IconEye,
+      icon: Eye,
       onClick: handleView,
     },
     {
       label: 'Edit',
-      icon: IconEdit,
+      icon: Edit,
       onClick: handleEdit,
       hidden: (client: Client) => client.status === 'ARCHIVED',
     },
     {
       label: (client: Client) => (client.status === 'ARCHIVED' ? 'Reactivate' : 'Archive'),
-      icon: (client: Client) => (client.status === 'ARCHIVED' ? IconArchiveOff : IconArchive),
+      icon: (client: Client) => (client.status === 'ARCHIVED' ? ArchiveRestore : Archive),
       color: 'yellow',
       onClick: handleArchive,
     },
     {
       label: 'Delete',
-      icon: IconTrash,
+      icon: Trash2,
       color: 'red',
       onClick: handleDelete,
       hidden: (client: Client) => client._count?.campaigns > 0,
@@ -574,7 +574,7 @@ export function ClientsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="blue">
-                  <IconBuilding size={20} />
+                  <Building size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -591,7 +591,7 @@ export function ClientsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="green">
-                  <IconCheck size={20} />
+                  <Check size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -615,7 +615,7 @@ export function ClientsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="green">
-                  <IconCurrencyDollar size={20} />
+                  <DollarSign size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -635,7 +635,7 @@ export function ClientsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="purple">
-                  <IconBriefcase size={20} />
+                  <Briefcase size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -645,12 +645,12 @@ export function ClientsPage() {
         <Group justify="space-between" mb="md">
           <TextInput
             placeholder="Search clients..."
-            leftSection={<IconBuilding size={16} />}
+            leftSection={<Building size={16} />}
             className="flex-1 max-w-md"
           />
           <Group>
             <Button
-              leftSection={<IconBuilding size={16} />}
+              leftSection={<Building size={16} />}
               onClick={() => {
                 setEditingClient(null);
                 form.reset();
@@ -666,7 +666,7 @@ export function ClientsPage() {
                   size="lg"
                   onClick={() => setViewMode('cards')}
                 >
-                  <IconLayoutGrid size={18} />
+                  <LayoutGrid size={18} />
                 </ActionIcon>
               </Tooltip>
               <Tooltip label="Table View">
@@ -675,7 +675,7 @@ export function ClientsPage() {
                   size="lg"
                   onClick={() => setViewMode('table')}
                 >
-                  <IconTable size={18} />
+                  <Table size={18} />
                 </ActionIcon>
               </Tooltip>
             </Group>
@@ -702,7 +702,7 @@ export function ClientsPage() {
             ) : data?.clients.length === 0 ? (
               <Paper p="xl" radius="lg" withBorder className="text-center">
                 <div className="mx-auto w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <IconBuilding size={40} className="text-blue-600" />
+                  <Building size={40} className="text-blue-600" />
                 </div>
                 <Text size="lg" fw={500} mb="xs">
                   No clients yet
@@ -711,7 +711,7 @@ export function ClientsPage() {
                   Start growing your client base
                 </Text>
                 <Button
-                  leftSection={<IconBuilding size={16} />}
+                  leftSection={<Building size={16} />}
                   onClick={() => {
                     setEditingClient(null);
                     form.reset();
@@ -761,7 +761,7 @@ export function ClientsPage() {
         title={
           <Group gap="sm">
             <ThemeIcon size="lg" radius="md" variant="light" color="blue">
-              <IconBuilding size={20} />
+              <Building size={20} />
             </ThemeIcon>
             <div>
               <Text fw={600}>{editingClient ? 'Edit Client' : 'Add New Client'}</Text>
@@ -777,13 +777,13 @@ export function ClientsPage() {
         <form onSubmit={form.onSubmit((values) => saveMutation.mutate(values))}>
           <Tabs defaultValue="contact" mt="md">
             <Tabs.List>
-              <Tabs.Tab value="contact" leftSection={<IconUser size={16} />}>
+              <Tabs.Tab value="contact" leftSection={<User size={16} />}>
                 Contact Info
               </Tabs.Tab>
-              <Tabs.Tab value="company" leftSection={<IconBuilding size={16} />}>
+              <Tabs.Tab value="company" leftSection={<Building size={16} />}>
                 Company Details
               </Tabs.Tab>
-              <Tabs.Tab value="notes" leftSection={<IconFileDescription size={16} />}>
+              <Tabs.Tab value="notes" leftSection={<FileText size={16} />}>
                 Notes & Budget
               </Tabs.Tab>
             </Tabs.List>
@@ -801,7 +801,7 @@ export function ClientsPage() {
                     label="Email Address"
                     placeholder="john@company.com"
                     required
-                    leftSection={<IconMail size={16} />}
+                    leftSection={<Mail size={16} />}
                     {...form.getInputProps('email')}
                   />
                 </Group>
@@ -810,13 +810,13 @@ export function ClientsPage() {
                   <TextInput
                     label="Phone Number"
                     placeholder="+1 (555) 123-4567"
-                    leftSection={<IconPhone size={16} />}
+                    leftSection={<Phone size={16} />}
                     {...form.getInputProps('phone')}
                   />
                   <TextInput
                     label="Location"
                     placeholder="New York, NY"
-                    leftSection={<IconMapPin size={16} />}
+                    leftSection={<MapPin size={16} />}
                   />
                 </Group>
               </Stack>
@@ -828,7 +828,7 @@ export function ClientsPage() {
                   label="Company Name"
                   placeholder="Acme Corp"
                   required
-                  leftSection={<IconBuilding size={16} />}
+                  leftSection={<Building size={16} />}
                   {...form.getInputProps('company')}
                 />
 
@@ -836,7 +836,7 @@ export function ClientsPage() {
                   <TextInput
                     label="Website"
                     placeholder="https://example.com"
-                    leftSection={<IconWorld size={16} />}
+                    leftSection={<Globe size={16} />}
                     {...form.getInputProps('website')}
                   />
                   <Select
@@ -852,12 +852,12 @@ export function ClientsPage() {
                   <TextInput
                     label="LinkedIn"
                     placeholder="company-name"
-                    leftSection={<IconBrandLinkedin size={16} />}
+                    leftSection={<Linkedin size={16} />}
                   />
                   <TextInput
                     label="Twitter/X"
                     placeholder="@company"
-                    leftSection={<IconBrandTwitter size={16} />}
+                    leftSection={<Twitter size={16} />}
                   />
                 </Group>
               </Stack>
@@ -871,7 +871,7 @@ export function ClientsPage() {
                   prefix="$"
                   thousandSeparator=","
                   min={0}
-                  leftSection={<IconCurrencyDollar size={16} />}
+                  leftSection={<DollarSign size={16} />}
                   description="Estimated annual content budget"
                   {...form.getInputProps('budget')}
                 />
@@ -885,7 +885,7 @@ export function ClientsPage() {
 
                 <Paper p="md" radius="md" withBorder className="bg-blue-50 border-blue-200">
                   <Group gap="xs" mb="xs">
-                    <IconTrendingUp size={16} className="text-blue-600" />
+                    <TrendingUp size={16} className="text-blue-600" />
                     <Text size="sm" fw={500}>
                       Client Success Tips
                     </Text>
@@ -906,7 +906,7 @@ export function ClientsPage() {
             <Button
               type="submit"
               loading={saveMutation.isPending}
-              leftSection={editingClient ? <IconCheck size={16} /> : <IconBuilding size={16} />}
+              leftSection={editingClient ? <Check size={16} /> : <Building size={16} />}
             >
               {editingClient ? 'Update Client' : 'Add Client'}
             </Button>

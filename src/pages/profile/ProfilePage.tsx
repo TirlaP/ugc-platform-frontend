@@ -18,7 +18,9 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconUser } from '@tabler/icons-react';
+import {
+  User
+} from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function ProfilePage() {
@@ -83,7 +85,7 @@ export function ProfilePage() {
             {/* Profile Header */}
             <Group>
               <Avatar src={user?.image} alt={user?.name || ''} size="xl" radius="xl" color="blue">
-                {user?.name?.charAt(0).toUpperCase() || <IconUser size={32} />}
+                {user?.name?.charAt(0).toUpperCase() || <User size={32} />}
               </Avatar>
               <div>
                 <Text size="xl" fw={600}>

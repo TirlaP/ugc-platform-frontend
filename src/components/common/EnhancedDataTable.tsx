@@ -21,14 +21,14 @@ import {
   Transition,
 } from '@mantine/core';
 import {
-  IconDotsVertical,
-  IconGrid3x3,
-  IconLayoutList,
-  IconPlus,
-  IconSearch,
-  IconSortAscending,
-  IconSortDescending,
-} from '@tabler/icons-react';
+  MoreVertical,
+  Grid3X3,
+  List,
+  Plus,
+  Search,
+  ArrowUp,
+  ArrowDown
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 export interface Column<T> {
@@ -163,7 +163,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
             <Menu position="bottom-end" shadow="md" width={200}>
               <Menu.Target>
                 <ActionIcon variant="subtle" color="gray" size="sm">
-                  <IconDotsVertical size={14} />
+                  <MoreVertical size={14} />
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown>
@@ -229,7 +229,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
             {searchable && (
               <TextInput
                 placeholder={searchPlaceholder}
-                leftSection={<IconSearch size={16} />}
+                leftSection={<Search size={16} />}
                 value={search}
                 onChange={(e) => setSearch(e.currentTarget.value)}
                 className="w-80"
@@ -247,7 +247,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
                   {
                     label: (
                       <Group gap="xs">
-                        <IconLayoutList size={16} />
+                        <List size={16} />
                         <span>Table</span>
                       </Group>
                     ),
@@ -256,7 +256,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
                   {
                     label: (
                       <Group gap="xs">
-                        <IconGrid3x3 size={16} />
+                        <Grid3X3 size={16} />
                         <span>Grid</span>
                       </Group>
                     ),
@@ -269,7 +269,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
 
             {onAdd && (
               <Button
-                leftSection={<IconPlus size={16} />}
+                leftSection={<Plus size={16} />}
                 onClick={onAdd}
                 variant="filled"
                 className="bg-blue-600 hover:bg-blue-700"
@@ -346,12 +346,12 @@ export function EnhancedDataTable<T extends Record<string, any>>({
                                 <Box>
                                   {sortBy === column.key ? (
                                     sortDirection === 'asc' ? (
-                                      <IconSortAscending size={14} className="text-blue-600" />
+                                      <ArrowUp size={14} className="text-blue-600" />
                                     ) : (
-                                      <IconSortDescending size={14} className="text-blue-600" />
+                                      <ArrowDown size={14} className="text-blue-600" />
                                     )
                                   ) : (
-                                    <IconSortAscending size={14} className="text-gray-400" />
+                                    <ArrowUp size={14} className="text-gray-400" />
                                   )}
                                 </Box>
                               )}
@@ -384,7 +384,7 @@ export function EnhancedDataTable<T extends Record<string, any>>({
                                     color="gray"
                                     className="hover:bg-gray-100"
                                   >
-                                    <IconDotsVertical size={16} />
+                                    <MoreVertical size={16} />
                                   </ActionIcon>
                                 </Menu.Target>
 

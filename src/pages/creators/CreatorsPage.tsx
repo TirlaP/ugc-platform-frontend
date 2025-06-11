@@ -31,27 +31,27 @@ import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import {
-  IconBrandInstagram,
-  IconBriefcase,
-  IconCheck,
-  IconCurrencyDollar,
-  IconEdit,
-  IconEye,
-  IconLayoutGrid,
-  IconMail,
-  IconMicrophone,
-  IconPencil,
-  IconPhone,
-  IconPhoto,
-  IconStar,
-  IconTable,
-  IconTrash,
-  IconTrendingUp,
-  IconUser,
-  IconVideo,
-  IconWorld,
-  IconX,
-} from '@tabler/icons-react';
+  Instagram,
+  Briefcase,
+  Check,
+  DollarSign,
+  Edit,
+  Eye,
+  LayoutGrid,
+  Mail,
+  Mic,
+  Edit3,
+  Phone,
+  Image,
+  Star,
+  Table,
+  Trash2,
+  TrendingUp,
+  User,
+  Video,
+  Globe,
+  X
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -60,11 +60,11 @@ import { EnhancedDataTable } from '@/components/common/EnhancedDataTable';
 import { creatorService } from '@/services/creator.service';
 
 const skillOptions = [
-  { value: 'video-editing', label: 'Video Editing', icon: IconVideo },
-  { value: 'photography', label: 'Photography', icon: IconPhoto },
-  { value: 'copywriting', label: 'Copywriting', icon: IconPencil },
-  { value: 'voice-over', label: 'Voice Over', icon: IconMicrophone },
-  { value: 'social-media', label: 'Social Media', icon: IconBrandInstagram },
+  { value: 'video-editing', label: 'Video Editing', icon: Video },
+  { value: 'photography', label: 'Photography', icon: Image },
+  { value: 'copywriting', label: 'Copywriting', icon: Edit3 },
+  { value: 'voice-over', label: 'Voice Over', icon: Mic },
+  { value: 'social-media', label: 'Social Media', icon: Instagram },
 ];
 
 const statusColors = {
@@ -101,7 +101,7 @@ export function CreatorsPage() {
         title: 'Success',
         message: editingCreator ? 'Creator updated successfully' : 'Creator created successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       close();
       form.reset();
@@ -112,7 +112,7 @@ export function CreatorsPage() {
         title: 'Error',
         message: 'Failed to save creator',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -126,7 +126,7 @@ export function CreatorsPage() {
         title: 'Success',
         message: 'Creator removed from platform',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
     },
     onError: () => {
@@ -134,7 +134,7 @@ export function CreatorsPage() {
         title: 'Error',
         message: 'Failed to delete creator',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -191,7 +191,7 @@ export function CreatorsPage() {
           {creator._count?.orders > 0 && (
             <Paper p="sm" radius="md" withBorder className="bg-yellow-50 border-yellow-200">
               <Group gap="xs">
-                <IconBriefcase size={16} className="text-yellow-600" />
+                <Briefcase size={16} className="text-yellow-600" />
                 <Text size="xs" c="yellow.8">
                   This creator has {creator._count.orders} active orders
                 </Text>
@@ -232,7 +232,7 @@ export function CreatorsPage() {
               radius="xl"
               className="ring-4 ring-white shadow-lg"
             >
-              {creator.name?.charAt(0).toUpperCase() || <IconUser size={32} />}
+              {creator.name?.charAt(0).toUpperCase() || <User size={32} />}
             </Avatar>
             <Badge
               color={statusColors[creator.status || 'ACTIVE']}
@@ -251,7 +251,7 @@ export function CreatorsPage() {
               {creator.name}
             </Text>
             <Group gap="xs" mt={4}>
-              <IconMail size={14} className="text-gray-400" />
+              <Mail size={14} className="text-gray-400" />
               <Text size="sm" c="dimmed">
                 {creator.email}
               </Text>
@@ -293,7 +293,7 @@ export function CreatorsPage() {
                   <Text size="lg" fw={600}>
                     {rating.toFixed(1)}
                   </Text>
-                  <IconStar size={14} className="text-yellow-500 fill-yellow-500" />
+                  <Star size={14} className="text-yellow-500 fill-yellow-500" />
                 </Group>
               </Paper>
             </Grid.Col>
@@ -339,7 +339,7 @@ export function CreatorsPage() {
                   handleView(creator);
                 }}
               >
-                <IconEye size={18} />
+                <Eye size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Send Message">
@@ -352,7 +352,7 @@ export function CreatorsPage() {
                   navigate('/messages', { state: { recipientId: creator.id } });
                 }}
               >
-                <IconMail size={18} />
+                <Mail size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Edit">
@@ -365,7 +365,7 @@ export function CreatorsPage() {
                   handleEdit(creator);
                 }}
               >
-                <IconEdit size={18} />
+                <Edit size={18} />
               </ActionIcon>
             </Tooltip>
             {(!creator._count?.orders || creator._count.orders === 0) && (
@@ -379,7 +379,7 @@ export function CreatorsPage() {
                     handleDelete(creator);
                   }}
                 >
-                  <IconTrash size={18} />
+                  <Trash2 size={18} />
                 </ActionIcon>
               </Tooltip>
             )}
@@ -403,7 +403,7 @@ export function CreatorsPage() {
             radius="xl"
             className="ring-2 ring-blue-100"
           >
-            {creator.name?.charAt(0).toUpperCase() || <IconUser size={20} />}
+            {creator.name?.charAt(0).toUpperCase() || <User size={20} />}
           </Avatar>
           <div>
             <Text size="sm" fw={600}>
@@ -455,7 +455,7 @@ export function CreatorsPage() {
               <Text size="sm" fw={600}>
                 {(creator.rating || 4.8).toFixed(1)}
               </Text>
-              <IconStar size={12} className="text-yellow-500 fill-yellow-500" />
+              <Star size={12} className="text-yellow-500 fill-yellow-500" />
             </Group>
           </div>
           <div>
@@ -507,17 +507,17 @@ export function CreatorsPage() {
   const actions = [
     {
       label: 'View',
-      icon: IconEye,
+      icon: Eye,
       onClick: handleView,
     },
     {
       label: 'Edit',
-      icon: IconEdit,
+      icon: Edit,
       onClick: handleEdit,
     },
     {
       label: 'Delete',
-      icon: IconTrash,
+      icon: Trash2,
       color: 'red',
       onClick: handleDelete,
       hidden: (creator: any) => creator._count?.orders > 0,
@@ -553,7 +553,7 @@ export function CreatorsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="blue">
-                  <IconUser size={20} />
+                  <User size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -570,7 +570,7 @@ export function CreatorsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="green">
-                  <IconCheck size={20} />
+                  <Check size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -587,7 +587,7 @@ export function CreatorsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="yellow">
-                  <IconStar size={20} />
+                  <Star size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -607,7 +607,7 @@ export function CreatorsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="purple">
-                  <IconBriefcase size={20} />
+                  <Briefcase size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -617,12 +617,12 @@ export function CreatorsPage() {
         <Group justify="space-between" mb="md">
           <TextInput
             placeholder="Search creators..."
-            leftSection={<IconUser size={16} />}
+            leftSection={<User size={16} />}
             className="flex-1 max-w-md"
           />
           <Group>
             <Button
-              leftSection={<IconUser size={16} />}
+              leftSection={<User size={16} />}
               onClick={() => {
                 setEditingCreator(null);
                 form.reset();
@@ -638,7 +638,7 @@ export function CreatorsPage() {
                   size="lg"
                   onClick={() => setViewMode('cards')}
                 >
-                  <IconLayoutGrid size={18} />
+                  <LayoutGrid size={18} />
                 </ActionIcon>
               </Tooltip>
               <Tooltip label="Table View">
@@ -647,7 +647,7 @@ export function CreatorsPage() {
                   size="lg"
                   onClick={() => setViewMode('table')}
                 >
-                  <IconTable size={18} />
+                  <Table size={18} />
                 </ActionIcon>
               </Tooltip>
             </Group>
@@ -674,7 +674,7 @@ export function CreatorsPage() {
             ) : data?.creators.length === 0 ? (
               <Paper p="xl" radius="lg" withBorder className="text-center">
                 <div className="mx-auto w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <IconUser size={40} className="text-blue-600" />
+                  <User size={40} className="text-blue-600" />
                 </div>
                 <Text size="lg" fw={500} mb="xs">
                   No creators yet
@@ -683,7 +683,7 @@ export function CreatorsPage() {
                   Start building your creator network
                 </Text>
                 <Button
-                  leftSection={<IconUser size={16} />}
+                  leftSection={<User size={16} />}
                   onClick={() => {
                     setEditingCreator(null);
                     form.reset();
@@ -733,7 +733,7 @@ export function CreatorsPage() {
         title={
           <Group gap="sm">
             <ThemeIcon size="lg" radius="md" variant="light" color="blue">
-              <IconUser size={20} />
+              <User size={20} />
             </ThemeIcon>
             <div>
               <Text fw={600}>{editingCreator ? 'Edit Creator' : 'Add New Creator'}</Text>
@@ -751,13 +751,13 @@ export function CreatorsPage() {
         <form onSubmit={form.onSubmit((values) => saveMutation.mutate(values))}>
           <Tabs defaultValue="basic" mt="md">
             <Tabs.List>
-              <Tabs.Tab value="basic" leftSection={<IconUser size={16} />}>
+              <Tabs.Tab value="basic" leftSection={<User size={16} />}>
                 Basic Info
               </Tabs.Tab>
-              <Tabs.Tab value="skills" leftSection={<IconStar size={16} />}>
+              <Tabs.Tab value="skills" leftSection={<Star size={16} />}>
                 Skills & Rates
               </Tabs.Tab>
-              <Tabs.Tab value="social" leftSection={<IconWorld size={16} />}>
+              <Tabs.Tab value="social" leftSection={<Globe size={16} />}>
                 Social & Portfolio
               </Tabs.Tab>
             </Tabs.List>
@@ -783,7 +783,7 @@ export function CreatorsPage() {
                   <TextInput
                     label="Phone Number"
                     placeholder="+1 (555) 123-4567"
-                    leftSection={<IconPhone size={16} />}
+                    leftSection={<Phone size={16} />}
                     {...form.getInputProps('phone')}
                   />
                   <Select
@@ -827,13 +827,13 @@ export function CreatorsPage() {
                   prefix="$"
                   thousandSeparator=","
                   min={0}
-                  leftSection={<IconCurrencyDollar size={16} />}
+                  leftSection={<DollarSign size={16} />}
                   {...form.getInputProps('rates')}
                 />
 
                 <Paper p="md" radius="md" withBorder className="bg-blue-50 border-blue-200">
                   <Group gap="xs" mb="xs">
-                    <IconTrendingUp size={16} className="text-blue-600" />
+                    <TrendingUp size={16} className="text-blue-600" />
                     <Text size="sm" fw={500}>
                       Performance Tips
                     </Text>
@@ -851,20 +851,20 @@ export function CreatorsPage() {
                 <TextInput
                   label="Portfolio Website"
                   placeholder="https://portfolio.com"
-                  leftSection={<IconWorld size={16} />}
+                  leftSection={<Globe size={16} />}
                   {...form.getInputProps('portfolioUrl')}
                 />
 
                 <TextInput
                   label="Social Media Handle"
                   placeholder="@username"
-                  leftSection={<IconBrandInstagram size={16} />}
+                  leftSection={<Instagram size={16} />}
                   {...form.getInputProps('socialMedia')}
                 />
 
                 <Paper p="md" radius="md" withBorder className="bg-purple-50 border-purple-200">
                   <Group gap="xs" mb="xs">
-                    <IconBrandInstagram size={16} className="text-purple-600" />
+                    <Instagram size={16} className="text-purple-600" />
                     <Text size="sm" fw={500}>
                       Social Presence
                     </Text>
@@ -885,7 +885,7 @@ export function CreatorsPage() {
             <Button
               type="submit"
               loading={saveMutation.isPending}
-              leftSection={editingCreator ? <IconCheck size={16} /> : <IconUser size={16} />}
+              leftSection={editingCreator ? <Check size={16} /> : <User size={16} />}
             >
               {editingCreator ? 'Update Creator' : 'Add Creator'}
             </Button>

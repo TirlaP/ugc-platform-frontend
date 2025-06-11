@@ -22,15 +22,15 @@ import {
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import {
-  IconArrowLeft,
-  IconBrandInstagram,
-  IconCheck,
-  IconCurrencyDollar,
-  IconPhone,
-  IconStar,
-  IconUser,
-  IconWorld,
-} from '@tabler/icons-react';
+  ArrowLeft,
+  Instagram,
+  Check,
+  DollarSign,
+  Phone,
+  Star,
+  User,
+  Globe
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ export function CreatorEditPage() {
         title: 'Success',
         message: 'Creator updated successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       navigate(`/creators/${id}`);
     },
@@ -150,7 +150,7 @@ export function CreatorEditPage() {
         <Group>
           <Button
             variant="subtle"
-            leftSection={<IconArrowLeft size={16} />}
+            leftSection={<ArrowLeft size={16} />}
             onClick={() => navigate(`/creators/${id}`)}
           >
             Back
@@ -170,13 +170,13 @@ export function CreatorEditPage() {
           <form onSubmit={form.onSubmit((values) => updateMutation.mutate(values))}>
             <Tabs defaultValue="basic">
               <Tabs.List>
-                <Tabs.Tab value="basic" leftSection={<IconUser size={16} />}>
+                <Tabs.Tab value="basic" leftSection={<User size={16} />}>
                   Basic Info
                 </Tabs.Tab>
-                <Tabs.Tab value="skills" leftSection={<IconStar size={16} />}>
+                <Tabs.Tab value="skills" leftSection={<Star size={16} />}>
                   Skills & Rates
                 </Tabs.Tab>
-                <Tabs.Tab value="social" leftSection={<IconWorld size={16} />}>
+                <Tabs.Tab value="social" leftSection={<Globe size={16} />}>
                   Social & Portfolio
                 </Tabs.Tab>
               </Tabs.List>
@@ -202,7 +202,7 @@ export function CreatorEditPage() {
                     <TextInput
                       label="Phone Number"
                       placeholder="+1 (555) 123-4567"
-                      leftSection={<IconPhone size={16} />}
+                      leftSection={<Phone size={16} />}
                       {...form.getInputProps('phone')}
                     />
                     <Select
@@ -243,7 +243,7 @@ export function CreatorEditPage() {
                     prefix="$"
                     thousandSeparator=","
                     min={0}
-                    leftSection={<IconCurrencyDollar size={16} />}
+                    leftSection={<DollarSign size={16} />}
                     {...form.getInputProps('rates')}
                   />
                 </Stack>
@@ -254,14 +254,14 @@ export function CreatorEditPage() {
                   <TextInput
                     label="Portfolio Website"
                     placeholder="https://portfolio.com"
-                    leftSection={<IconWorld size={16} />}
+                    leftSection={<Globe size={16} />}
                     {...form.getInputProps('portfolioUrl')}
                   />
 
                   <TextInput
                     label="Social Media Handle"
                     placeholder="@username"
-                    leftSection={<IconBrandInstagram size={16} />}
+                    leftSection={<Instagram size={16} />}
                     {...form.getInputProps('socialMedia')}
                   />
                 </Stack>
@@ -275,7 +275,7 @@ export function CreatorEditPage() {
               <Button
                 type="submit"
                 loading={updateMutation.isPending}
-                leftSection={<IconCheck size={16} />}
+                leftSection={<Check size={16} />}
               >
                 Update Creator
               </Button>

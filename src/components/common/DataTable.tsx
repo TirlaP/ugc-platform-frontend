@@ -15,11 +15,11 @@ import {
   TextInput,
 } from '@mantine/core';
 import {
-  IconDotsVertical,
-  IconEye,
-  IconPlus,
-  IconSearch,
-} from '@tabler/icons-react';
+  MoreVertical,
+  Eye,
+  Plus,
+  Search
+} from 'lucide-react';
 import { useState } from 'react';
 
 export interface Column<T> {
@@ -123,7 +123,7 @@ export function DataTable<T extends Record<string, any>>({
           {searchable && (
             <TextInput
               placeholder={searchPlaceholder}
-              leftSection={<IconSearch size={16} />}
+              leftSection={<Search size={16} />}
               value={search}
               onChange={(e) => setSearch(e.currentTarget.value)}
               style={{ flex: 1, maxWidth: 400 }}
@@ -131,7 +131,7 @@ export function DataTable<T extends Record<string, any>>({
           )}
 
           {onAdd && (
-            <Button leftSection={<IconPlus size={16} />} onClick={onAdd}>
+            <Button leftSection={<Plus size={16} />} onClick={onAdd}>
               {addLabel}
             </Button>
           )}
@@ -192,7 +192,7 @@ export function DataTable<T extends Record<string, any>>({
                       <Menu position="bottom-end" shadow="md" width={200}>
                         <Menu.Target>
                           <ActionIcon variant="subtle" color="gray">
-                            <IconDotsVertical size={16} />
+                            <MoreVertical size={16} />
                           </ActionIcon>
                         </Menu.Target>
 

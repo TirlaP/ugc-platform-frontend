@@ -3,7 +3,7 @@
  * Main wrapper for the entire application
  */
 
-import { useAuth, useAuthSync } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 interface RootLayoutProps {
@@ -13,9 +13,6 @@ interface RootLayoutProps {
 export function RootLayout({ children }: RootLayoutProps) {
   const { user, isLoading, checkAuth } = useAuth();
   const navigate = useNavigate();
-
-  // Sync Better Auth session with Jotai
-  useAuthSync();
 
   // Auth is automatically managed by Better Auth + useAuthSync
 

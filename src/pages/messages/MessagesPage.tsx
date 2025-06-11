@@ -25,22 +25,22 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
-  IconBriefcase,
-  IconCheck,
-  IconClock,
-  IconDotsVertical,
-  IconEdit,
-  IconFile,
-  IconFilter,
-  IconMessageCircle,
-  IconPaperclip,
-  IconPhoto,
-  IconSearch,
-  IconSend,
-  IconTrash,
-  IconUser,
-  IconVideo,
-} from '@tabler/icons-react';
+  Briefcase,
+  Check,
+  Clock,
+  MoreVertical,
+  Edit,
+  FileText,
+  Filter,
+  MessageCircle,
+  Paperclip,
+  Image,
+  Search,
+  Send,
+  Trash2,
+  User,
+  Video
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
@@ -126,13 +126,13 @@ export function MessagesPage() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'CLIENT':
-        return <IconBriefcase size={14} />;
+        return <Briefcase size={14} />;
       case 'CREATOR':
-        return <IconVideo size={14} />;
+        return <Video size={14} />;
       case 'ADMIN':
-        return <IconUser size={14} />;
+        return <User size={14} />;
       default:
-        return <IconUser size={14} />;
+        return <User size={14} />;
     }
   };
 
@@ -170,7 +170,7 @@ export function MessagesPage() {
               Communicate with your team and clients
             </Text>
           </div>
-          <Button leftSection={<IconFilter size={16} />} variant="subtle">
+          <Button leftSection={<Filter size={16} />} variant="subtle">
             Filter
           </Button>
         </Group>
@@ -182,7 +182,7 @@ export function MessagesPage() {
               <Box p="md" pb="sm">
                 <TextInput
                   placeholder="Search conversations..."
-                  leftSection={<IconSearch size={16} />}
+                  leftSection={<Search size={16} />}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.currentTarget.value)}
                   mb="sm"
@@ -240,14 +240,14 @@ export function MessagesPage() {
                                 size="sm"
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                <IconDotsVertical size={16} />
+                                <MoreVertical size={16} />
                               </ActionIcon>
                             </Menu.Target>
                             <Menu.Dropdown>
-                              <Menu.Item leftSection={<IconEdit size={14} />}>
+                              <Menu.Item leftSection={<Edit size={14} />}>
                                 Edit campaign
                               </Menu.Item>
-                              <Menu.Item leftSection={<IconTrash size={14} />} color="red">
+                              <Menu.Item leftSection={<Trash2 size={14} />} color="red">
                                 Delete conversation
                               </Menu.Item>
                             </Menu.Dropdown>
@@ -279,12 +279,12 @@ export function MessagesPage() {
                     <Group gap="xs">
                       <Tooltip label="Attach files">
                         <ActionIcon variant="subtle">
-                          <IconPaperclip size={20} />
+                          <Paperclip size={20} />
                         </ActionIcon>
                       </Tooltip>
                       <Tooltip label="Campaign info">
                         <ActionIcon variant="subtle">
-                          <IconDotsVertical size={20} />
+                          <MoreVertical size={20} />
                         </ActionIcon>
                       </Tooltip>
                     </Group>
@@ -365,11 +365,11 @@ export function MessagesPage() {
                                         variant={isOwn ? 'white' : 'light'}
                                         leftSection={
                                           attachment.type.includes('image') ? (
-                                            <IconPhoto size={12} />
+                                            <Image size={12} />
                                           ) : attachment.type.includes('video') ? (
-                                            <IconVideo size={12} />
+                                            <Video size={12} />
                                           ) : (
-                                            <IconFile size={12} />
+                                            <FileText size={12} />
                                           )
                                         }
                                       >
@@ -382,7 +382,7 @@ export function MessagesPage() {
                                   <Text size="xs" opacity={0.7}>
                                     {getMessageTime(message.createdAt)}
                                   </Text>
-                                  {isOwn && <IconCheck size={12} style={{ opacity: 0.7 }} />}
+                                  {isOwn && <Check size={12} style={{ opacity: 0.7 }} />}
                                   {message.editedAt && (
                                     <Text size="xs" opacity={0.7}>
                                       (edited)
@@ -404,7 +404,7 @@ export function MessagesPage() {
                   <Group align="flex-end" gap="sm">
                     <Tooltip label="Attach file">
                       <ActionIcon variant="subtle" size="lg">
-                        <IconPaperclip size={20} />
+                        <Paperclip size={20} />
                       </ActionIcon>
                     </Tooltip>
                     <Textarea
@@ -426,7 +426,7 @@ export function MessagesPage() {
                         disabled={!newMessage.trim() || sendMessageMutation.isPending}
                         loading={sendMessageMutation.isPending}
                       >
-                        <IconSend size={18} />
+                        <Send size={18} />
                       </ActionIcon>
                     </Tooltip>
                   </Group>
@@ -437,7 +437,7 @@ export function MessagesPage() {
               </Stack>
             ) : (
               <Stack align="center" justify="center" h="100%" gap="xl">
-                <IconMessageCircle size={64} stroke={1.5} color="var(--mantine-color-gray-4)" />
+                <MessageCircle size={64} stroke={1.5} color="var(--mantine-color-gray-4)" />
                 <div style={{ textAlign: 'center' }}>
                   <Text size="lg" fw={500} mb={4}>
                     Select a conversation

@@ -1,99 +1,101 @@
 /**
- * Authentication hook using Better Auth
- * Provides auth state and actions
+ * Simple authentication hook
  */
 
-import { useSession } from '@/lib/auth-client';
-import { authService } from '@/services/auth.service';
-import type { LoginCredentials, RegisterData, User } from '@/types/auth.types';
+import { authService, type User } from '@/services/auth.service';
+import type { LoginCredentials, RegisterData } from '@/types/auth.types';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useAuth = () => {
-  const { data: session, isPending: isLoading, error, refetch } = useSession();
+  const [user, setUser] = useState<User | null>(authService.getUser());
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!authService.getToken());
 
   const login = async (credentials: LoginCredentials) => {
+    setIsLoading(true);
     try {
-      console.log('🔐 Starting login process...');
-      const response = await authService.signIn(credentials);
-      
-      console.log('✅ Login successful');
-      console.log('- User:', response.user);
-      console.log('- Session:', response.session);
-      
-      // Check cookies after login
-      console.log('🍪 Cookies after login:', document.cookie);
-      
-      // Wait a moment for cookies to be set
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Refetch the session to update the hook state
-      console.log('🔄 Refetching session...');
-      const refetchResult = await refetch();
-      console.log('🔄 Refetch result:', refetchResult);
-      
+      const response = await authService.signIn(credentials.email, credentials.password);
+      setUser(response.user);
+      setIsAuthenticated(true);
       return response;
     } catch (error) {
-      console.error('❌ Login failed:', error);
+      console.error('Login failed:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const register = async (data: RegisterData) => {
+    setIsLoading(true);
     try {
-      const response = await authService.signUp(data);
-      
-      // Refetch the session to update the hook state
-      await refetch();
-      
+      const response = await authService.signUp(data.email, data.password, data.name);
+      setUser(response.user);
+      setIsAuthenticated(true);
       return response;
     } catch (error) {
+      console.error('Register failed:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const logout = async () => {
+    setIsLoading(true);
     try {
       await authService.signOut();
-      // Session will be automatically updated by the useSession hook
+      setUser(null);
+      setIsAuthenticated(false);
+      window.location.href = '/auth/login';
     } catch (error) {
       console.error('Logout error:', error);
-      throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const updateUserData = async (data: Partial<User>) => {
+  const checkAuth = useCallback(async () => {
+    const token = authService.getToken();
+    if (!token) {
+      setUser(null);
+      setIsAuthenticated(false);
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      const updatedUser = await authService.updateProfile(data);
-      await refetch();
-      return updatedUser;
+      const currentUser = await authService.getMe();
+      if (currentUser) {
+        setUser(currentUser);
+        setIsAuthenticated(true);
+      } else {
+        authService.clearAuth();
+        setUser(null);
+        setIsAuthenticated(false);
+      }
     } catch (error) {
-      throw error;
+      console.error('Auth check failed:', error);
+      authService.clearAuth();
+      setUser(null);
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, []);
 
-  const checkAuth = async () => {
-    return await refetch();
-  };
+  // Check auth on mount
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   return {
-    // Session data from Better Auth
-    user: session?.user as User | null,
-    session: session?.session || null,
+    user,
     isLoading,
-    isAuthenticated: !!session?.user,
-    error,
-    
-    // Auth actions
+    isAuthenticated,
     login,
     register,
     logout,
-    updateUser: updateUserData,
     checkAuth,
-    refetch,
   };
-};
-
-// Export a simple hook that just wraps useSession for other components
-export const useAuthSync = () => {
-  // This is now just a passthrough to Better Auth's built-in session management
-  return useSession();
 };

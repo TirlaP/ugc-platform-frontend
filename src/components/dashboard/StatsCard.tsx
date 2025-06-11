@@ -2,8 +2,11 @@
  * Modern stats card component with animations and better styling
  */
 
-import { Card, Group, Text, ThemeIcon, Transition, rem } from '@mantine/core';
-import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
+import { Card, Group, Text, ThemeIcon, Transition } from '@mantine/core';
+import {
+  TrendingDown,
+  TrendingUp
+} from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
@@ -76,9 +79,9 @@ export function StatsCard({
             <Group gap={4} className="mt-auto">
               <Group gap={4}>
                 {isPositiveTrend ? (
-                  <IconTrendingUp size={12} className="text-green-600" />
+                  <TrendingUp size={12} className="text-green-600" />
                 ) : (
-                  <IconTrendingDown size={12} className="text-red-600" />
+                  <TrendingDown size={12} className="text-red-600" />
                 )}
                 <Text
                   size="xs"

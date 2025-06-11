@@ -36,28 +36,28 @@ import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import {
-  IconBrandGoogleDrive,
-  IconBriefcase,
-  IconBuilding,
-  IconCalendar,
-  IconCheck,
-  IconClock,
-  IconCurrencyDollar,
-  IconEdit,
-  IconExternalLink,
-  IconEye,
-  IconFileUpload,
-  IconFolder,
-  IconInfoCircle,
-  IconLayoutGrid,
-  IconMail,
-  IconMessages,
-  IconRefresh,
-  IconShare,
-  IconTable,
-  IconTrash,
-  IconX,
-} from '@tabler/icons-react';
+  HardDrive,
+  Briefcase,
+  Building,
+  Calendar,
+  Check,
+  Clock,
+  DollarSign,
+  Edit,
+  ExternalLink,
+  Eye,
+  UploadCloud,
+  FolderOpen,
+  Info,
+  LayoutGrid,
+  Mail,
+  MessageSquare,
+  RefreshCw,
+  Share2,
+  Table,
+  Trash2,
+  X
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -253,12 +253,12 @@ export function CampaignsPage() {
           <Group gap={4}>
             {emailSettings?.configured && (
               <Tooltip label="Email enabled">
-                <IconMail size={16} color="var(--mantine-color-blue-6)" />
+                <Mail size={16} color="var(--mantine-color-blue-6)" />
               </Tooltip>
             )}
             {driveSettings?.connected && (
               <Tooltip label="Google Drive connected">
-                <IconBrandGoogleDrive size={16} color="var(--mantine-color-green-6)" />
+                <HardDrive size={16} color="var(--mantine-color-green-6)" />
               </Tooltip>
             )}
           </Group>
@@ -304,30 +304,30 @@ export function CampaignsPage() {
   const actions = [
     {
       label: 'View',
-      icon: IconEye,
+      icon: Eye,
       onClick: handleView,
     },
     {
       label: 'Messages',
-      icon: IconMessages,
+      icon: MessageSquare,
       onClick: (campaign: Campaign) =>
         navigate('/messages', { state: { campaignId: campaign.id } }),
     },
     {
       label: 'Integrations',
-      icon: IconShare,
+      icon: Share2,
       onClick: handleIntegrations,
     },
     {
       label: 'Edit',
-      icon: IconEdit,
+      icon: Edit,
       onClick: handleEdit,
       hidden: (campaign: Campaign) =>
         campaign.status === 'COMPLETED' || campaign.status === 'CANCELLED',
     },
     {
       label: 'Delete',
-      icon: IconTrash,
+      icon: Trash2,
       color: 'red',
       onClick: handleDelete,
       hidden: (campaign: Campaign) =>
@@ -364,12 +364,12 @@ export function CampaignsPage() {
             <Group gap={4}>
               {emailSettings?.configured && (
                 <ThemeIcon size="sm" color="blue" variant="light">
-                  <IconMail size={14} />
+                  <Mail size={14} />
                 </ThemeIcon>
               )}
               {driveSettings?.connected && (
                 <ThemeIcon size="sm" color="green" variant="light">
-                  <IconBrandGoogleDrive size={14} />
+                  <HardDrive size={14} />
                 </ThemeIcon>
               )}
             </Group>
@@ -382,7 +382,7 @@ export function CampaignsPage() {
               {campaign.title}
             </Text>
             <Group gap="xs" mt={4}>
-              <IconBuilding size={14} className="text-gray-400" />
+              <Building size={14} className="text-gray-400" />
               <Text size="sm" c="dimmed">
                 {campaign.client?.name || 'No client'}
               </Text>
@@ -443,7 +443,7 @@ export function CampaignsPage() {
                   handleView(campaign);
                 }}
               >
-                <IconEye size={18} />
+                <Eye size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Messages">
@@ -456,7 +456,7 @@ export function CampaignsPage() {
                   navigate('/messages', { state: { campaignId: campaign.id } });
                 }}
               >
-                <IconMessages size={18} />
+                <MessageSquare size={18} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Integrations">
@@ -469,7 +469,7 @@ export function CampaignsPage() {
                   handleIntegrations(campaign);
                 }}
               >
-                <IconShare size={18} />
+                <Share2 size={18} />
               </ActionIcon>
             </Tooltip>
             {campaign.status !== 'COMPLETED' && campaign.status !== 'CANCELLED' && (
@@ -483,7 +483,7 @@ export function CampaignsPage() {
                     handleEdit(campaign);
                   }}
                 >
-                  <IconEdit size={18} />
+                  <Edit size={18} />
                 </ActionIcon>
               </Tooltip>
             )}
@@ -522,7 +522,7 @@ export function CampaignsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="purple">
-                  <IconBriefcase size={20} />
+                  <Briefcase size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -541,7 +541,7 @@ export function CampaignsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="blue">
-                  <IconClock size={20} />
+                  <Clock size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -565,7 +565,7 @@ export function CampaignsPage() {
                   </Text>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="green">
-                  <IconCurrencyDollar size={20} />
+                  <DollarSign size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -581,7 +581,7 @@ export function CampaignsPage() {
                     {emailSettings?.configured && (
                       <Badge
                         size="xs"
-                        leftSection={<IconMail size={10} />}
+                        leftSection={<Mail size={10} />}
                         variant="light"
                         color="blue"
                       >
@@ -591,7 +591,7 @@ export function CampaignsPage() {
                     {driveSettings?.connected && (
                       <Badge
                         size="xs"
-                        leftSection={<IconBrandGoogleDrive size={10} />}
+                        leftSection={<HardDrive size={10} />}
                         variant="light"
                         color="green"
                       >
@@ -601,7 +601,7 @@ export function CampaignsPage() {
                   </Group>
                 </div>
                 <ThemeIcon size="lg" radius="md" variant="light" color="violet">
-                  <IconShare size={20} />
+                  <Share2 size={20} />
                 </ThemeIcon>
               </Group>
             </Paper>
@@ -610,7 +610,7 @@ export function CampaignsPage() {
 
         {(!emailSettings?.configured || !driveSettings?.connected) && (
           <Alert
-            icon={<IconInfoCircle />}
+            icon={<Info />}
             title="Enhance your workflow"
             color="blue"
             variant="light"
@@ -637,12 +637,12 @@ export function CampaignsPage() {
         <Group justify="space-between" mb="md">
           <TextInput
             placeholder="Search campaigns..."
-            leftSection={<IconBriefcase size={16} />}
+            leftSection={<Briefcase size={16} />}
             className="flex-1 max-w-md"
           />
           <Group>
             <Button
-              leftSection={<IconBriefcase size={16} />}
+              leftSection={<Briefcase size={16} />}
               onClick={() => {
                 setEditingCampaign(null);
                 form.reset();
@@ -658,7 +658,7 @@ export function CampaignsPage() {
                   size="lg"
                   onClick={() => setViewMode('cards')}
                 >
-                  <IconLayoutGrid size={18} />
+                  <LayoutGrid size={18} />
                 </ActionIcon>
               </Tooltip>
               <Tooltip label="Table View">
@@ -667,7 +667,7 @@ export function CampaignsPage() {
                   size="lg"
                   onClick={() => setViewMode('table')}
                 >
-                  <IconTable size={18} />
+                  <Table size={18} />
                 </ActionIcon>
               </Tooltip>
             </Group>
@@ -694,7 +694,7 @@ export function CampaignsPage() {
             ) : data?.campaigns.length === 0 ? (
               <Paper p="xl" radius="lg" withBorder className="text-center">
                 <div className="mx-auto w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                  <IconBriefcase size={40} className="text-purple-600" />
+                  <Briefcase size={40} className="text-purple-600" />
                 </div>
                 <Text size="lg" fw={500} mb="xs">
                   No campaigns yet
@@ -703,7 +703,7 @@ export function CampaignsPage() {
                   Start your first UGC campaign
                 </Text>
                 <Button
-                  leftSection={<IconBriefcase size={16} />}
+                  leftSection={<Briefcase size={16} />}
                   onClick={() => {
                     setEditingCampaign(null);
                     form.reset();
@@ -825,10 +825,10 @@ export function CampaignsPage() {
         {selectedCampaign && (
           <Tabs defaultValue="email">
             <Tabs.List>
-              <Tabs.Tab value="email" leftSection={<IconMail size={16} />}>
+              <Tabs.Tab value="email" leftSection={<Mail size={16} />}>
                 Email
               </Tabs.Tab>
-              <Tabs.Tab value="drive" leftSection={<IconBrandGoogleDrive size={16} />}>
+              <Tabs.Tab value="drive" leftSection={<HardDrive size={16} />}>
                 Google Drive
               </Tabs.Tab>
             </Tabs.List>
@@ -859,12 +859,12 @@ export function CampaignsPage() {
                       <Group>
                         <Button
                           variant="light"
-                          leftSection={<IconMail size={16} />}
+                          leftSection={<Mail size={16} />}
                           onClick={() => navigate(`/campaigns/${selectedCampaign.id}/emails`)}
                         >
                           View Email Threads
                         </Button>
-                        <Button variant="subtle" leftSection={<IconRefresh size={16} />}>
+                        <Button variant="subtle" leftSection={<RefreshCw size={16} />}>
                           Sync Emails
                         </Button>
                       </Group>
@@ -898,13 +898,13 @@ export function CampaignsPage() {
                   {driveSettings?.connected ? (
                     <>
                       <Group mb="md">
-                        <IconFolder size={20} />
+                        <FolderOpen size={20} />
                         <Text size="sm">Campaign Files / {selectedCampaign.title}</Text>
                       </Group>
                       <Group>
                         <Button
                           variant="light"
-                          leftSection={<IconBrandGoogleDrive size={16} />}
+                          leftSection={<HardDrive size={16} />}
                           onClick={() =>
                             window.open(
                               `https://drive.google.com/drive/folders/${selectedCampaign.id}`,
@@ -916,7 +916,7 @@ export function CampaignsPage() {
                         </Button>
                         <Button
                           variant="subtle"
-                          leftSection={<IconRefresh size={16} />}
+                          leftSection={<RefreshCw size={16} />}
                           loading={syncDriveMutation.isPending}
                           onClick={() => syncDriveMutation.mutate(selectedCampaign.id)}
                         >

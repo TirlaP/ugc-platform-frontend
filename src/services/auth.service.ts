@@ -1,145 +1,178 @@
 /**
- * Authentication service layer
- * Handles all auth-related API calls using Better Auth
+ * Simple JWT-based authentication client
  */
 
-import {
-  authClient,
-  signIn as authSignIn,
-  signOut as authSignOut,
-  signUp as authSignUp,
-} from '@/lib/auth-client';
-import type { AuthResponse, LoginCredentials, RegisterData, User } from '@/types/auth.types';
+import apiClient from "@/lib/api-client";
+
+const TOKEN_KEY = 'auth_token';
+const USER_KEY = 'auth_user';
+
+export interface User {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string | null;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
 
 class AuthService {
   /**
-   * Sign in with email and password
+   * Get stored token
    */
-  async signIn(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await authSignIn.email({
-      email: credentials.email,
-      password: credentials.password,
-    });
-
-    if (response.error) {
-      throw new Error(response.error.message || 'Sign in failed');
-    }
-
-    if (!response.data) {
-      throw new Error('Sign in failed - no data returned');
-    }
-
-    return {
-      user: response.data.user as User,
-      session: response.data.session,
-    };
+  getToken(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
   }
 
   /**
-   * Register a new user
+   * Get stored user
    */
-  async signUp(data: RegisterData): Promise<AuthResponse> {
-    const response = await authSignUp.email({
-      email: data.email,
-      password: data.password,
-      name: data.name,
-    });
-
-    if (response.error) {
-      throw new Error(response.error.message || 'Sign up failed');
-    }
-
-    if (!response.data) {
-      throw new Error('Sign up failed - no data returned');
-    }
-
-    return {
-      user: response.data.user as User,
-      session: response.data.session,
-    };
+  getUser(): User | null {
+    const userStr = localStorage.getItem(USER_KEY);
+    return userStr ? JSON.parse(userStr) : null;
   }
 
   /**
-   * Sign in with social provider
+   * Store auth data
    */
-  async signInWithProvider(provider: 'google' | 'github'): Promise<void> {
-    const response = await authSignIn.social({
-      provider,
-    });
+  setAuth(data: AuthResponse): void {
+    localStorage.setItem(TOKEN_KEY, data.token);
+    localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+    
+    // Set token in axios default headers
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    
+    // Fetch and set user's default organization
+    this.setDefaultOrganization();
+  }
 
-    if (response.error) {
-      throw new Error(response.error.message || 'Social sign in failed');
+  /**
+   * Set user's default organization
+   */
+  private async setDefaultOrganization(): Promise<void> {
+    try {
+      // Use a small delay to ensure token is set
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Temporarily remove org header to make this call
+      const orgHeader = apiClient.defaults.headers.common['X-Organization-ID'];
+      delete apiClient.defaults.headers.common['X-Organization-ID'];
+      
+      const response = await apiClient.get('/organizations/me');
+      const organizations = response.data;
+      
+      // Set the first organization as default
+      if (organizations && organizations.length > 0) {
+        const defaultOrg = organizations[0];
+        localStorage.setItem('current_organization_id', defaultOrg.id);
+        localStorage.setItem('current_organization', JSON.stringify(defaultOrg));
+        
+        // Set it in axios headers immediately
+        apiClient.defaults.headers.common['X-Organization-ID'] = defaultOrg.id;
+        
+        console.log('✅ Set default organization:', defaultOrg.name, defaultOrg.id);
+      } else {
+        console.log('⚠️ No organizations found for user');
+      }
+      
+      // Restore org header if it existed
+      if (orgHeader && !organizations?.length) {
+        apiClient.defaults.headers.common['X-Organization-ID'] = orgHeader;
+      }
+    } catch (error) {
+      console.log('Could not fetch organizations:', error);
     }
   }
 
   /**
-   * Sign out the current user
+   * Clear auth data
+   */
+  clearAuth(): void {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem('current_organization_id');
+    localStorage.removeItem('current_organization');
+    delete apiClient.defaults.headers.common['Authorization'];
+    delete apiClient.defaults.headers.common['X-Organization-ID'];
+  }
+
+  /**
+   * Sign in
+   */
+  async signIn(email: string, password: string): Promise<AuthResponse> {
+    const response = await apiClient.post<AuthResponse>('/auth/sign-in', {
+      email,
+      password,
+    });
+    
+    this.setAuth(response.data);
+    return response.data;
+  }
+
+  /**
+   * Sign up
+   */
+  async signUp(userData: {
+    email: string;
+    password: string;
+    name: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    role?: string;
+    organizationName?: string;
+  }): Promise<AuthResponse> {
+    const response = await apiClient.post<AuthResponse>('/auth/sign-up', userData);
+    
+    this.setAuth(response.data);
+    return response.data;
+  }
+
+  /**
+   * Sign out
    */
   async signOut(): Promise<void> {
-    const response = await authSignOut();
-    if (response.error) {
-      console.error('Sign out error:', response.error);
+    try {
+      await apiClient.post('/auth/sign-out');
+    } catch (error) {
+      // Ignore errors
+    }
+    this.clearAuth();
+  }
+
+  /**
+   * Get current user from server
+   */
+  async getMe(): Promise<User | null> {
+    try {
+      const response = await apiClient.get<{ user: User }>('/auth/me');
+      return response.data.user;
+    } catch {
+      return null;
     }
   }
 
   /**
-   * Get current session
+   * Initialize auth (set token in headers if exists)
    */
-  async getSession() {
-    const session = await authClient.getSession();
-    return session.data;
-  }
-
-  /**
-   * Update user profile
-   */
-  async updateProfile(data: Partial<User>): Promise<User> {
-    const response = await authClient.updateUser(data);
-    if (response.error) {
-      throw new Error(response.error.message || 'Profile update failed');
+  init(): void {
+    const token = this.getToken();
+    if (token) {
+      apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-    return response.data as User;
-  }
-
-  /**
-   * Request password reset
-   */
-  async forgotPassword(email: string): Promise<void> {
-    const response = await authClient.forgetPassword({
-      email,
-      redirectTo: `${window.location.origin}/auth/reset-password`,
-    });
     
-    if (response.error) {
-      throw new Error(response.error.message || 'Password reset failed');
-    }
-  }
-
-  /**
-   * Reset password with token
-   */
-  async resetPassword(newPassword: string): Promise<void> {
-    const response = await authClient.resetPassword({
-      newPassword,
-    });
-    
-    if (response.error) {
-      throw new Error(response.error.message || 'Password reset failed');
-    }
-  }
-
-  /**
-   * Verify email address
-   */
-  async verifyEmail(token: string): Promise<void> {
-    const response = await authClient.verifyEmail({
-      query: { token },
-    });
-    
-    if (response.error) {
-      throw new Error(response.error.message || 'Email verification failed');
+    // Set organization header if exists
+    const orgId = localStorage.getItem('current_organization_id');
+    if (orgId) {
+      apiClient.defaults.headers.common['X-Organization-ID'] = orgId;
     }
   }
 }
 
 export const authService = new AuthService();
+
+// Initialize on import
+authService.init();

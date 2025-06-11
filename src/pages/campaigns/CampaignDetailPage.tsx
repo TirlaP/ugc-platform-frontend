@@ -35,27 +35,27 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import {
-  IconArchive,
-  IconBuilding,
-  IconCalendar,
-  IconChartBar,
-  IconCheck,
-  IconCurrencyDollar,
-  IconDots,
-  IconDownload,
-  IconEdit,
-  IconExternalLink,
-  IconFileDescription,
-  IconFolder,
-  IconMail,
-  IconMessage,
-  IconPaperclip,
-  IconUser,
-  IconUserMinus,
-  IconUserPlus,
-  IconVideo,
-  IconX,
-} from '@tabler/icons-react';
+  Archive,
+  Building,
+  Calendar,
+  BarChart3,
+  Check,
+  DollarSign,
+  MoreVertical,
+  Download,
+  Edit,
+  ExternalLink,
+  FileText,
+  FolderOpen,
+  Mail,
+  MessageSquare,
+  Paperclip,
+  User,
+  UserMinus,
+  UserPlus,
+  Video,
+  X
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { useState } from 'react';
@@ -150,7 +150,7 @@ export function CampaignDetailPage() {
         title: 'Success',
         message: 'Creator assigned successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       closeAssignModal();
       setSelectedCreatorId('');
@@ -161,7 +161,7 @@ export function CampaignDetailPage() {
         title: 'Error',
         message: 'Failed to assign creator',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -178,7 +178,7 @@ export function CampaignDetailPage() {
         title: 'Success',
         message: 'Creator has been unassigned from the campaign',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
     },
     onError: (error: any) => {
@@ -186,7 +186,7 @@ export function CampaignDetailPage() {
         title: 'Error',
         message: error.response?.data?.error || 'Failed to unassign creator',
         color: 'red',
-        icon: <IconX size={16} />,
+        icon: <X size={16} />,
       });
     },
   });
@@ -200,7 +200,7 @@ export function CampaignDetailPage() {
         title: 'Success',
         message: 'Campaign status updated',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
     },
   });
@@ -253,7 +253,7 @@ export function CampaignDetailPage() {
           {order.status !== 'NEW' && order.status !== 'ASSIGNED' && (
             <Paper p="sm" radius="md" withBorder className="bg-yellow-50 border-yellow-200">
               <Group gap="xs">
-                <IconCheck size={16} className="text-yellow-600" />
+                <Check size={16} className="text-yellow-600" />
                 <Text size="xs" c="yellow.8">
                   This creator has already started work on this campaign (Status: {order.status})
                 </Text>
@@ -295,20 +295,20 @@ export function CampaignDetailPage() {
               </Group>
               <Group gap="xl">
                 <Group gap="xs">
-                  <IconBuilding size={16} className="text-gray-400" />
+                  <Building size={16} className="text-gray-400" />
                   <Text size="sm" fw={500}>
                     {campaign.client?.name}
                   </Text>
                 </Group>
                 <Group gap="xs">
-                  <IconCurrencyDollar size={16} className="text-gray-400" />
+                  <DollarSign size={16} className="text-gray-400" />
                   <Text size="sm" fw={500}>
                     ${Number(campaign.budget).toLocaleString()}
                   </Text>
                 </Group>
                 {campaign.deadline && (
                   <Group gap="xs">
-                    <IconCalendar size={16} className="text-gray-400" />
+                    <Calendar size={16} className="text-gray-400" />
                     <Text size="sm" fw={500}>
                       Due {new Date(campaign.deadline).toLocaleDateString()}
                     </Text>
@@ -324,13 +324,13 @@ export function CampaignDetailPage() {
             <Group justify="flex-end">
               <Button
                 variant="light"
-                leftSection={<IconMessage size={16} />}
+                leftSection={<MessageSquare size={16} />}
                 onClick={() => navigate('/messages', { state: { campaignId: campaign.id } })}
               >
                 Messages
               </Button>
               <Button
-                leftSection={<IconUserPlus size={16} />}
+                leftSection={<UserPlus size={16} />}
                 onClick={openAssignModal}
                 disabled={campaign.status === 'COMPLETED' || campaign.status === 'CANCELLED'}
               >
@@ -339,19 +339,19 @@ export function CampaignDetailPage() {
               <Menu position="bottom-end" withArrow>
                 <Menu.Target>
                   <ActionIcon variant="light" size="lg">
-                    <IconDots size={20} />
+                    <MoreVertical size={20} />
                   </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item
-                    leftSection={<IconEdit size={16} />}
+                    leftSection={<Edit size={16} />}
                     onClick={() => navigate(`/campaigns/${campaign.id}/edit`)}
                     disabled={campaign.status === 'COMPLETED' || campaign.status === 'CANCELLED'}
                   >
                     Edit Campaign
                   </Menu.Item>
                   <Menu.Item
-                    leftSection={<IconFolder size={16} />}
+                    leftSection={<FolderOpen size={16} />}
                     onClick={() => window.open(driveInfo?.root?.folders?.[0]?.id, '_blank')}
                     disabled={!driveInfo}
                   >
@@ -377,7 +377,7 @@ export function CampaignDetailPage() {
                     </Menu.Item>
                   ))}
                   <Menu.Divider />
-                  <Menu.Item leftSection={<IconArchive size={16} />} color="red">
+                  <Menu.Item leftSection={<Archive size={16} />} color="red">
                     Archive Campaign
                   </Menu.Item>
                 </Menu.Dropdown>
@@ -395,7 +395,7 @@ export function CampaignDetailPage() {
                   Assigned Creators
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="blue">
-                  <IconUser size={16} />
+                  <User size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -413,7 +413,7 @@ export function CampaignDetailPage() {
                   Content Pieces
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="purple">
-                  <IconVideo size={16} />
+                  <Video size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -431,7 +431,7 @@ export function CampaignDetailPage() {
                   Messages
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="green">
-                  <IconMessage size={16} />
+                  <MessageSquare size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -472,16 +472,16 @@ export function CampaignDetailPage() {
             <Tabs.Tab value="overview" leftSection={<IconChartBar size={16} />}>
               Overview
             </Tabs.Tab>
-            <Tabs.Tab value="creators" leftSection={<IconUser size={16} />}>
+            <Tabs.Tab value="creators" leftSection={<User size={16} />}>
               Creators ({assignedCreators.length})
             </Tabs.Tab>
-            <Tabs.Tab value="content" leftSection={<IconVideo size={16} />}>
+            <Tabs.Tab value="content" leftSection={<Video size={16} />}>
               Content ({media?.media?.length || 0})
             </Tabs.Tab>
-            <Tabs.Tab value="communication" leftSection={<IconMessage size={16} />}>
+            <Tabs.Tab value="communication" leftSection={<MessageSquare size={16} />}>
               Communication
             </Tabs.Tab>
-            <Tabs.Tab value="requirements" leftSection={<IconFileDescription size={16} />}>
+            <Tabs.Tab value="requirements" leftSection={<FileText size={16} />}>
               Requirements
             </Tabs.Tab>
           </Tabs.List>
@@ -497,7 +497,7 @@ export function CampaignDetailPage() {
                     </Text>
                     <Timeline active={-1} bulletSize={24} lineWidth={2}>
                       <Timeline.Item
-                        bullet={<IconCheck size={12} />}
+                        bullet={<Check size={12} />}
                         title="Campaign Created"
                         color="green"
                       >
@@ -512,7 +512,7 @@ export function CampaignDetailPage() {
                       {campaign.orders?.map((order: any) => (
                         <Timeline.Item
                           key={order.id}
-                          bullet={<IconUser size={12} />}
+                          bullet={<User size={12} />}
                           title={`${order.creator.name} assigned`}
                           color={order.status === 'COMPLETED' ? 'green' : 'blue'}
                         >
@@ -532,7 +532,7 @@ export function CampaignDetailPage() {
 
                       {campaign.status === 'COMPLETED' && (
                         <Timeline.Item
-                          bullet={<IconCheck size={12} />}
+                          bullet={<Check size={12} />}
                           title="Campaign Completed"
                           color="green"
                         >
@@ -608,7 +608,7 @@ export function CampaignDetailPage() {
                         </Text>
                         <Group gap="xs" mt={4}>
                           <Avatar size="sm" radius="md" color="blue">
-                            <IconBuilding size={16} />
+                            <Building size={16} />
                           </Avatar>
                           <div>
                             <Text size="sm" fw={500}>
@@ -680,7 +680,7 @@ export function CampaignDetailPage() {
                     <Stack gap="sm">
                       <Button
                         variant="light"
-                        leftSection={<IconMail size={16} />}
+                        leftSection={<Mail size={16} />}
                         fullWidth
                         onClick={() => navigate(`/campaigns/${campaign.id}/email`)}
                       >
@@ -688,7 +688,7 @@ export function CampaignDetailPage() {
                       </Button>
                       <Button
                         variant="light"
-                        leftSection={<IconFolder size={16} />}
+                        leftSection={<FolderOpen size={16} />}
                         fullWidth
                         onClick={() => window.open(driveInfo?.root?.folders?.[0]?.id, '_blank')}
                         disabled={!driveInfo}
@@ -697,7 +697,7 @@ export function CampaignDetailPage() {
                       </Button>
                       <Button
                         variant="light"
-                        leftSection={<IconDownload size={16} />}
+                        leftSection={<Download size={16} />}
                         fullWidth
                         onClick={() => navigate(`/campaigns/${campaign.id}/export`)}
                       >
@@ -713,11 +713,11 @@ export function CampaignDetailPage() {
           <Tabs.Panel value="creators" pt="md">
             {assignedCreators.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconUser size={48} className="text-gray-300 mx-auto mb-4" />
+                <User size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed" mb="md">
                   No creators assigned yet
                 </Text>
-                <Button leftSection={<IconUserPlus size={16} />} onClick={openAssignModal}>
+                <Button leftSection={<UserPlus size={16} />} onClick={openAssignModal}>
                   Assign First Creator
                 </Button>
               </Paper>
@@ -727,7 +727,7 @@ export function CampaignDetailPage() {
                   <Card key={order.id} shadow="sm" radius="md" withBorder>
                     <Group mb="md">
                       <Avatar src={order.creator.image} size={50} radius="xl" color="blue">
-                        {order.creator.name?.charAt(0) || <IconUser size={24} />}
+                        {order.creator.name?.charAt(0) || <User size={24} />}
                       </Avatar>
                       <div style={{ flex: 1 }}>
                         <Text fw={500}>{order.creator.name}</Text>
@@ -779,7 +779,7 @@ export function CampaignDetailPage() {
                         <Button
                           variant="light"
                           size="sm"
-                          leftSection={<IconMessage size={14} />}
+                          leftSection={<MessageSquare size={14} />}
                           onClick={() =>
                             navigate('/messages', {
                               state: { campaignId: campaign.id, recipientId: order.creator.id },
@@ -791,7 +791,7 @@ export function CampaignDetailPage() {
                         <Button
                           variant="light"
                           size="sm"
-                          leftSection={<IconUser size={14} />}
+                          leftSection={<User size={14} />}
                           onClick={() => navigate(`/creators/${order.creator.id}`)}
                         >
                           Profile
@@ -800,12 +800,12 @@ export function CampaignDetailPage() {
                       <Menu shadow="md" width={200}>
                         <Menu.Target>
                           <ActionIcon variant="light" color="gray">
-                            <IconDots size={16} />
+                            <MoreVertical size={16} />
                           </ActionIcon>
                         </Menu.Target>
                         <Menu.Dropdown>
                           <Menu.Item
-                            leftSection={<IconUserMinus size={14} />}
+                            leftSection={<UserMinus size={14} />}
                             color="red"
                             onClick={() => handleUnassignCreator(order)}
                             disabled={unassignMutation.isPending}
@@ -828,12 +828,12 @@ export function CampaignDetailPage() {
               </Center>
             ) : media?.media?.length === 0 ? (
               <Paper p="xl" radius="md" withBorder ta="center">
-                <IconVideo size={48} className="text-gray-300 mx-auto mb-4" />
+                <Video size={48} className="text-gray-300 mx-auto mb-4" />
                 <Text c="dimmed" mb="md">
                   No content uploaded yet
                 </Text>
                 <Button
-                  leftSection={<IconVideo size={16} />}
+                  leftSection={<Video size={16} />}
                   onClick={() => navigate('/media', { state: { campaignId: campaign.id } })}
                 >
                   Upload Content
@@ -846,7 +846,7 @@ export function CampaignDetailPage() {
                   <Button
                     variant="light"
                     size="sm"
-                    leftSection={<IconVideo size={16} />}
+                    leftSection={<Video size={16} />}
                     onClick={() => navigate('/media', { state: { campaignId: campaign.id } })}
                   >
                     Upload More
@@ -868,14 +868,14 @@ export function CampaignDetailPage() {
                           h={200}
                           className="bg-gray-100 flex items-center justify-center"
                         >
-                          <IconVideo size={48} className="text-gray-400" />
+                          <Video size={48} className="text-gray-400" />
                         </Card.Section>
                       ) : (
                         <Card.Section
                           h={200}
                           className="bg-gray-100 flex items-center justify-center"
                         >
-                          <IconFileDescription size={48} className="text-gray-400" />
+                          <FileText size={48} className="text-gray-400" />
                         </Card.Section>
                       )}
                       <Stack gap="xs" mt="md">
@@ -911,7 +911,7 @@ export function CampaignDetailPage() {
                           <Button
                             variant="light"
                             size="xs"
-                            leftSection={<IconExternalLink size={14} />}
+                            leftSection={<ExternalLink size={14} />}
                             onClick={() => window.open(item.url, '_blank')}
                           >
                             View
@@ -919,7 +919,7 @@ export function CampaignDetailPage() {
                           <Button
                             variant="light"
                             size="xs"
-                            leftSection={<IconDownload size={14} />}
+                            leftSection={<Download size={14} />}
                             onClick={() => {
                               const a = document.createElement('a');
                               a.href = item.url;
@@ -949,7 +949,7 @@ export function CampaignDetailPage() {
                     <Button
                       variant="light"
                       size="sm"
-                      leftSection={<IconMessage size={16} />}
+                      leftSection={<MessageSquare size={16} />}
                       onClick={() => navigate('/messages', { state: { campaignId: campaign.id } })}
                     >
                       Open Chat
@@ -996,7 +996,7 @@ export function CampaignDetailPage() {
                     <Button
                       variant="light"
                       size="sm"
-                      leftSection={<IconMail size={16} />}
+                      leftSection={<Mail size={16} />}
                       onClick={() => navigate(`/campaigns/${campaign.id}/email`)}
                     >
                       Send Email
@@ -1105,11 +1105,11 @@ export function CampaignDetailPage() {
                         {campaign.attachments.map((attachment: any, index: number) => (
                           <Group key={index} justify="space-between">
                             <Group gap="xs">
-                              <IconPaperclip size={16} className="text-gray-400" />
+                              <Paperclip size={16} className="text-gray-400" />
                               <Text size="sm">{attachment.name}</Text>
                             </Group>
                             <ActionIcon variant="subtle" size="sm">
-                              <IconDownload size={16} />
+                              <Download size={16} />
                             </ActionIcon>
                           </Group>
                         ))}
@@ -1202,7 +1202,7 @@ export function CampaignDetailPage() {
               Cancel
             </Button>
             <Button
-              leftSection={<IconUserPlus size={16} />}
+              leftSection={<UserPlus size={16} />}
               onClick={handleAssignCreator}
               loading={assignCreatorMutation.isPending}
               disabled={!selectedCreatorId}

@@ -16,7 +16,10 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconArrowLeft, IconCheck } from '@tabler/icons-react';
+import {
+  ArrowLeft,
+  Check
+} from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -45,7 +48,7 @@ export function ClientEditPage() {
         title: 'Success',
         message: 'Client updated successfully',
         color: 'green',
-        icon: <IconCheck size={16} />,
+        icon: <Check size={16} />,
       });
       navigate(`/clients/${id}`);
     },
@@ -120,7 +123,7 @@ export function ClientEditPage() {
         <Group>
           <Button
             variant="subtle"
-            leftSection={<IconArrowLeft size={16} />}
+            leftSection={<ArrowLeft size={16} />}
             onClick={() => navigate(`/clients/${id}`)}
           >
             Back

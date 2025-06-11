@@ -3,7 +3,9 @@
  */
 
 import { Avatar, Badge, Card, Group, Stack, Text, Title, Transition } from '@mantine/core';
-import { IconClock } from '@tabler/icons-react';
+import {
+  Clock
+} from 'lucide-react';
 
 interface ActivityItem {
   id: string;
@@ -52,7 +54,7 @@ export function ActivityCard({
           {items.length === 0 ? (
             <div className="text-center py-6">
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <IconClock size={18} className="text-gray-400" />
+                <Clock size={18} className="text-gray-400" />
               </div>
               <Text size="xs" c="dimmed">
                 {emptyMessage}
