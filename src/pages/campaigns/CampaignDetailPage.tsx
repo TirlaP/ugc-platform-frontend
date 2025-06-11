@@ -449,7 +449,7 @@ export function CampaignDetailPage() {
                   Completion
                 </Text>
                 <ThemeIcon size="sm" radius="md" variant="light" color="yellow">
-                  <IconChartBar size={16} />
+                  <BarChart3 size={16} />
                 </ThemeIcon>
               </Group>
               <Text size="xl" fw={700}>
@@ -469,7 +469,7 @@ export function CampaignDetailPage() {
         {/* Tabs */}
         <Tabs value={activeTab} onChange={setActiveTab}>
           <Tabs.List>
-            <Tabs.Tab value="overview" leftSection={<IconChartBar size={16} />}>
+            <Tabs.Tab value="overview" leftSection={<BarChart3 size={16} />}>
               Overview
             </Tabs.Tab>
             <Tabs.Tab value="creators" leftSection={<User size={16} />}>
