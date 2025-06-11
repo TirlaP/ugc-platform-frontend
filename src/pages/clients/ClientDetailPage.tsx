@@ -688,14 +688,6 @@ export function ClientDetailPage() {
                           ).length || 0}
                         </Text>
                       </Group>
-                      <Group justify="space-between">
-                        <Text size="sm" c="dimmed">
-                          Rate
-                        </Text>
-                        <Text size="sm" fw={500} c="green">
-                          ${creator.rates || 0}/project
-                        </Text>
-                      </Group>
                     </Stack>
                     <Button
                       variant="light"

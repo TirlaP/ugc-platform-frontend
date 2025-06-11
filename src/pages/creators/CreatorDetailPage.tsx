@@ -335,7 +335,7 @@ export function CreatorDetailPage() {
 
         {/* Stats Cards */}
         <Grid>
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+          <Grid.Col span={{ base: 12, sm: 6, lg: 2.4 }}>
             <Paper p="md" radius="md" withBorder>
               <Group justify="space-between" mb="xs">
                 <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
@@ -353,7 +353,7 @@ export function CreatorDetailPage() {
               </Text>
             </Paper>
           </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+          <Grid.Col span={{ base: 12, sm: 6, lg: 2.4 }}>
             <Paper p="md" radius="md" withBorder>
               <Group justify="space-between" mb="xs">
                 <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
@@ -371,7 +371,7 @@ export function CreatorDetailPage() {
               </Text>
             </Paper>
           </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+          <Grid.Col span={{ base: 12, sm: 6, lg: 2.4 }}>
             <Paper p="md" radius="md" withBorder>
               <Group justify="space-between" mb="xs">
                 <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
@@ -393,7 +393,25 @@ export function CreatorDetailPage() {
               />
             </Paper>
           </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+          <Grid.Col span={{ base: 12, sm: 6, lg: 2.4 }}>
+            <Paper p="md" radius="md" withBorder>
+              <Group justify="space-between" mb="xs">
+                <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
+                  Clients
+                </Text>
+                <ThemeIcon size="sm" radius="md" variant="light" color="orange">
+                  <Building size={16} />
+                </ThemeIcon>
+              </Group>
+              <Text size="xl" fw={700}>
+                {clients?.length || 0}
+              </Text>
+              <Text size="xs" c="dimmed" mt={4}>
+                Unique clients
+              </Text>
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6, lg: 2.4 }}>
             <Paper p="md" radius="md" withBorder>
               <Group justify="space-between" mb="xs">
                 <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
