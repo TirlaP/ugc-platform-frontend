@@ -57,10 +57,10 @@ export function LoginPage() {
 
     try {
       await login(data);
-      navigate(from, { replace: true });
+      // Force a page reload to establish session properly
+      window.location.href = from;
     } catch (err) {
       setError(getErrorMessage(err));
-    } finally {
       setIsLoading(false);
     }
   };
@@ -135,13 +135,21 @@ export function LoginPage() {
                   <div><strong>Email:</strong> {DEMO_CREDENTIALS.email}</div>
                   <div><strong>Password:</strong> {DEMO_CREDENTIALS.password}</div>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleUseDemoCredentials}
-                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  Click to fill form automatically →
-                </button>
+                <div className="mt-2 flex flex-col gap-1">
+                  <button
+                    type="button"
+                    onClick={handleUseDemoCredentials}
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium text-left"
+                  >
+                    Click to fill form automatically →
+                  </button>
+                  <Link
+                    to="/auth/register"
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium text-left"
+                  >
+                    First time? Register with demo email →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

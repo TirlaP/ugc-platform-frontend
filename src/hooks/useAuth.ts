@@ -32,6 +32,19 @@ export const useAuth = () => {
       console.log('response', response);
       setUser(response.user);
       setSession(response.session);
+      
+      // Wait a moment for session to be established
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Check if session was established
+      const currentSession = await authService.getSession();
+      if (currentSession?.session) {
+        setSession(currentSession.session);
+        setLoading(false);
+        return response;
+      } else {
+        throw new Error('Session not established');
+      }
     } catch (error) {
       setLoading(false);
       throw error;

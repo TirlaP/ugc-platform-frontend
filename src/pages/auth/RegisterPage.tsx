@@ -8,10 +8,10 @@ import { getErrorMessage } from '@/lib/api-client';
 import { authService } from '@/services/auth.service';
 import type { RegisterData, Role } from '@/types/auth.types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Building, Eye, EyeOff, Loader2, Lock, Mail, Phone, User } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, Building, Eye, EyeOff, Info, Loader2, Lock, Mail, Phone, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 
 // Validation schema

@@ -9,6 +9,11 @@ import { createAuthClient } from 'better-auth/react';
 // Create the auth client with our backend URL
 export const authClient = createAuthClient({
   baseURL: import.meta.env.VITE_BETTER_AUTH_URL || 'http://localhost:3000',
+  
+  // Include credentials for cross-origin requests
+  fetchOptions: {
+    credentials: 'include',
+  },
 
   // Infer additional fields we added on the backend
   plugins: [
