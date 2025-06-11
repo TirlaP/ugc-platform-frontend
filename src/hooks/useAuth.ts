@@ -19,8 +19,16 @@ export const useAuth = () => {
       console.log('- User:', response.user);
       console.log('- Session:', response.session);
       
+      // Check cookies after login
+      console.log('🍪 Cookies after login:', document.cookie);
+      
+      // Wait a moment for cookies to be set
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       // Refetch the session to update the hook state
-      await refetch();
+      console.log('🔄 Refetching session...');
+      const refetchResult = await refetch();
+      console.log('🔄 Refetch result:', refetchResult);
       
       return response;
     } catch (error) {
