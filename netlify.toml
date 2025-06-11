@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  VITE_API_URL = "https://ugc-platform-backend.onrender.com/api"
+  VITE_BETTER_AUTH_URL = "https://ugc-platform-backend.onrender.com"
 
 [[redirects]]
   from = "/*"

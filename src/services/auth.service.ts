@@ -31,10 +31,14 @@ class AuthService {
       localStorage.setItem('ugc-auth-token', response.data.token);
     }
 
-    return {
+    // Create a complete auth response
+    const authResponse = {
       user: response.data.user as User,
       session: response.data.session || { token: response.data.token },
     };
+
+    console.log('Auth service signIn returning:', authResponse);
+    return authResponse;
   }
 
   /**

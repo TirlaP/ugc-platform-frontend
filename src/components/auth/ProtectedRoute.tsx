@@ -30,8 +30,15 @@ export function ProtectedRoute({
     );
   }
 
+  console.log('🛡️ ProtectedRoute check:');
+  console.log('- isAuthenticated:', isAuthenticated);
+  console.log('- user:', user);
+  console.log('- isLoading:', isLoading);
+  console.log('- localStorage user:', localStorage.getItem('ugc-auth-user'));
+  
   // Not authenticated
   if (!isAuthenticated || !user) {
+    console.log("🚫 Redirecting to login - not authenticated");
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 

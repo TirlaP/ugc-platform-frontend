@@ -8,23 +8,28 @@ import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
 // Base atoms
-export const userAtom = atom<User | null>(null);
+export const userAtom = atomWithStorage<User | null>('ugc-auth-user', null);
 export const sessionAtom = atom<any | null>(null);
 export const isLoadingAtom = atom<boolean>(true);
-export const isAuthenticatedAtom = atomWithStorage<boolean>('isAuthenticated', false);
 
-// Derived atoms
-export const authStateAtom = atom((get) => ({
-  user: get(userAtom),
-  session: get(sessionAtom),
-  isLoading: get(isLoadingAtom),
-  isAuthenticated: get(isAuthenticatedAtom),
-}));
+// Derived atoms - isAuthenticated is computed from user existence
+export const authStateAtom = atom((get) => {
+  const user = get(userAtom);
+  const session = get(sessionAtom);
+  const isLoading = get(isLoadingAtom);
+  const isAuthenticated = !!user;
+  
+  return {
+    user,
+    session,
+    isLoading,
+    isAuthenticated,
+  };
+});
 
 // Action atoms
 export const setUserAtom = atom(null, (_get, set, user: User | null) => {
   set(userAtom, user);
-  set(isAuthenticatedAtom, !!user);
 });
 
 export const setSessionAtom = atom(null, (_get, set, session: any) => {
@@ -45,6 +50,7 @@ export const updateUserAtom = atom(null, (get, set, userData: Partial<User>) => 
 export const clearAuthAtom = atom(null, (_get, set) => {
   set(userAtom, null);
   set(sessionAtom, null);
-  set(isAuthenticatedAtom, false);
   set(isLoadingAtom, false);
+  // Clear localStorage token as well
+  localStorage.removeItem('ugc-auth-token');
 });

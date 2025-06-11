@@ -57,10 +57,11 @@ export function LoginPage() {
 
     try {
       await login(data);
-      // Force a page reload to establish session properly
-      window.location.href = from;
+      // Use React Router navigation instead of page reload
+      navigate(from, { replace: true });
     } catch (err) {
       setError(getErrorMessage(err));
+    } finally {
       setIsLoading(false);
     }
   };

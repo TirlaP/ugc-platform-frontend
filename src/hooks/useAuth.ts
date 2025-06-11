@@ -28,13 +28,23 @@ export const useAuth = () => {
   const login = async (credentials: LoginCredentials) => {
     setLoading(true);
     try {
+      console.log('🔐 Starting login process...');
       const response = await authService.signIn(credentials);
-      console.log('response', response);
+      
+      console.log('✅ Login successful:');
+      console.log('- User:', response.user);
+      console.log('- Session:', response.session);
+      
+      // Set user first (this will set isAuthenticated to true via atomWithStorage)
       setUser(response.user);
       setSession(response.session);
+      
+      console.log('📱 Auth state updated, localStorage should now contain user');
+      
       setLoading(false);
       return response;
     } catch (error) {
+      console.error('❌ Login failed:', error);
       setLoading(false);
       throw error;
     }
@@ -97,13 +107,33 @@ export const useAuthSync = () => {
   const clearAuth = useSetAtom(clearAuthAtom);
 
   useEffect(() => {
-    if (!isPending) {
+    console.log('🔄 useAuthSync running:');
+    console.log('- isPending:', isPending);
+    console.log('- session:', session);
+    
+    // Don't interfere with auth state if user is already logged in from localStorage
+    const storedUser = localStorage.getItem('ugc-auth-user');
+    console.log('- storedUser:', storedUser);
+    
+    if (storedUser && storedUser !== 'null') {
+      console.log('✅ User found in localStorage, preserving auth state');
       setLoading(false);
-      if (session?.user) {
-        setUser(session.user as User);
-      } else {
-        clearAuth();
-      }
+      return;
     }
-  }, [session, isPending]); // Remove setter dependencies to prevent infinite loop
+
+    const initAuth = async () => {
+      if (!isPending) {
+        if (session?.user) {
+          console.log('✅ Better Auth session found, updating Jotai state');
+          setUser(session.user as User);
+          setLoading(false);
+        } else {
+          console.log('⚠️ No Better Auth session, but not clearing auth (localStorage takes precedence)');
+          setLoading(false);
+        }
+      }
+    };
+
+    initAuth();
+  }, [session, isPending]);
 };
