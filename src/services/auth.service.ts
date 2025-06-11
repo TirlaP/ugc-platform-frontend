@@ -26,9 +26,14 @@ class AuthService {
       throw new Error('Sign in failed');
     }
 
+    // Store token in localStorage as fallback for cross-domain issues
+    if (response.data.token) {
+      localStorage.setItem('ugc-auth-token', response.data.token);
+    }
+
     return {
       user: response.data.user as User,
-      session: response.data.session,
+      session: response.data.session || { token: response.data.token },
     };
   }
 
@@ -65,6 +70,8 @@ class AuthService {
    * Sign out the current user
    */
   async signOut(): Promise<void> {
+    // Clear stored token
+    localStorage.removeItem('ugc-auth-token');
     await authSignOut();
   }
 
@@ -73,6 +80,36 @@ class AuthService {
    */
   async getSession() {
     const session = await authClient.getSession();
+    
+    // If no session from cookies, try using stored token
+    if (!session.data?.session) {
+      const storedToken = localStorage.getItem('ugc-auth-token');
+      if (storedToken) {
+        // Validate token by making a request with it
+        try {
+          const response = await fetch(`${import.meta.env.VITE_BETTER_AUTH_URL || 'http://localhost:3000'}/api/auth/get-session`, {
+            headers: {
+              'Authorization': `Bearer ${storedToken}`,
+            },
+            credentials: 'include',
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.user) {
+              return {
+                session: { token: storedToken },
+                user: data.user,
+              };
+            }
+          }
+        } catch (error) {
+          console.log('Token validation failed:', error);
+          localStorage.removeItem('ugc-auth-token');
+        }
+      }
+    }
+    
     return session.data;
   }
 

@@ -19,8 +19,12 @@ export const apiClient: AxiosInstance = axios.create({
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   async (config) => {
+    // Add token from localStorage if available (fallback for cross-domain issues)
+    const token = localStorage.getItem('ugc-auth-token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     // Better Auth handles auth automatically with cookies
-    // But we can add custom headers if needed
     return config;
   },
   (error) => {
@@ -36,6 +40,9 @@ apiClient.interceptors.response.use(
 
     // Handle 401 Unauthorized
     if (error.response?.status === 401 && originalRequest) {
+      // Clear invalid token
+      localStorage.removeItem('ugc-auth-token');
+      
       // Try to refresh the session
       try {
         await authClient.getSession();
