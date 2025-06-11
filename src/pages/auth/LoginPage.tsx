@@ -16,7 +16,7 @@ import { z } from 'zod';
 
 // Demo credentials
 const DEMO_CREDENTIALS = {
-  email: 'admin@ugc-agency.com',
+  email: 'admin@demo.com',
   password: 'demo123456',
 };
 
